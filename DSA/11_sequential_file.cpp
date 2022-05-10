@@ -1,139 +1,171 @@
-#include<iostream>
+#include<bits/stdc++.h>
 #include<fstream>
-#include<string.h>
 using namespace std;
 
-class student
+struct Student
 {
-    typedef struct stud
-    {
-        int roll;
-        char name[10];
-        char div;
-        char add[10];
-    }stud;
-    stud rec;
-    public:
-    void create();
-    void display();
-    int search();
-    void Delete();
+    int roll_number;
+    string name;
+    char division;
+    string address;
 };
 
-void student::create()
+void add_students()
 {
-    char ans;
-    ofstream fout;
-    fout.open("stud.dat",ios::out|ios::binary);
-    do
-    {
-        cout << "\n\tEnter Roll No of Student: ";
-        cin >> rec.roll;
-        cout << "\n\tEnter a Name of Student : ";
-        cin >> rec.name;
-        cout << "\n\tEnter a Division of Student : ";
-        cin >> rec.div;
-        cout << "\n\tEnter a Address of Student: ";
-        cin >> rec.add;
-        fout.write((char *)&rec, sizeof(stud)) << flush;
-        cout << "\n\tDo You Want to Add More Records: ";
-        cin >> ans;
-    } while(ans=='y'||ans=='Y');
-    fout.close();
+    Student s;
+    cout << "Enter the roll number of the student to be added-\n";
+    cin >> s.roll_number;
+    cout << "Enter the name of the student to be added-\n";
+    cin >> s.name;
+    cout << "Enter the division of the student to be added-\n";
+    cin >> s.division;
+    cout << "Enter the address of the student to be added-\n";
+    cin >> s.address;
+
+    ofstream write;
+    write.open("students.txt", ios::app);
+
+    write << "\n" << s.roll_number;
+    write << "\n" << s.name;
+    write << "\n" << s.division;
+    write << "\n" << s.address;
+
+    write.close();
 }
 
-void student::display()
+void display(Student s)
 {
-    ifstream fin;
-    fin.open("stud.dat",ios::in|ios::binary);
-    fin.seekg(0,ios::beg);
-    cout << "\n\tThe Contents of File are:\n";
-    cout << "\n\tRoll\tName\tDiv\tAddress";
-    while(fin.read((char *)&rec,sizeof(stud)))
+    cout << "Roll Number- " << s.roll_number << endl;
+    cout << "Name- " << s.name << endl;
+    cout << "Division- " << s.division << endl;
+    cout << "Address- " << s.address << endl;
+    cout << endl;
+}
+
+void read_students()
+{
+    Student s;
+    ifstream read;
+    read.open("students.txt");
+
+    while (!read.eof())
     {
-        if(rec.roll!=-1)
-        cout << "\n\t" << rec.roll << "\t" << rec.name << "\t" << rec.div << "\t" << rec.add;
+        read >> s.roll_number;
+        read >> s.name;
+        read >> s.division;
+        read >> s.address;
+
+        display(s);
     }
-    fin.close();
+
+    read.close();
 }
 
-int student::search()
+int search_students(int roll_number)
 {
-    int r, i = 0;
-    ifstream fin;
-    fin.open("stud.dat", ios::in|ios::binary);
-    fin.seekg(0, ios::beg);
-    cout << "\nEnter a Roll No: ";
-    cin >> r;
-    while(fin.read((char *)&rec, sizeof(stud)))
+    Student s;
+
+    ifstream read;
+    read.open("students.txt");
+
+    while (!read.eof())
     {
-        if(rec.roll == r)
+        read >> s.roll_number;
+        read >> s.name;
+        read >> s.division;
+        read >> s.address;
+
+        if (s.roll_number == roll_number)
         {
-            cout << "\nRecord Found!\n";
-            cout << "\nRoll\tName\tDiv\tAddress";
-            cout << "\n" << rec.roll << "\t" << rec.name << "\t" << rec.div << "\t" << rec.add;
-            return i;
+            cout << "Student's record found!" << endl;
+            return s.roll_number;
         }
-        i++;
     }
-    fin.close();
-    return 0;
+
+    read.close();
+    cout << "Student's record not found!" << endl;
+    return -1;
 }
 
-void student::Delete()
+void delete_students(int roll_number)
 {
-    int pos;
-    pos = search();
-    fstream f;
-    f.open("stud.dat",ios::in|ios::out|ios::binary);
-    f.seekg(0,ios::beg);
-    if(pos == 0)
+    roll_number = search_students(roll_number);
+
+    if (roll_number == -1)
     {
-        cout << "\n\n\tRecord Not Found";
+        cout << "Student record to be deleted is not present in the file!" << endl;
         return;
     }
-    int offset = pos*sizeof(stud);
-    f.seekp(offset);
-    rec.roll = -1;
-    strcpy(rec.name,"NULL");
-    rec.div = 'N';
-    strcpy(rec.add,"NULL");
-    f.write((char *)&rec, sizeof(stud));
-    f.seekg(0);
-    f.close();
-    cout << "\nRecord Deleted";
+    else
+    {
+        Student s;
+
+        ofstream write;
+        write.open("temp.txt", ios::app);
+
+        ifstream read;
+        read.open("students.txt");
+
+        while (!read.eof())
+        {
+            read >> s.roll_number;
+            read >> s.name;
+            read >> s.division;
+            read >> s.address;
+
+            if (s.roll_number != roll_number)
+            {
+                write << "\n" << s.roll_number;
+                write << "\n" << s.name;
+                write << "\n" << s.division;
+                write << "\n" << s.address;
+            }
+        }
+
+        write.close();
+        read.close();
+
+        remove("students.txt");
+        rename("temp.txt", "students.txt");
+        
+        cout << "Student record to be deleted is deleted successfully!" << endl;
+    }
 }
 
 int main()
 {
-    student obj;
-    int ch,key;
-    char ans;
-    do
+    int choice;
+    do 
     {
-        cout << "\n\n***** Student Information *****";
-        cout << "\n1. Create\n2. Display\n3. Delete\n4. Search\n5. Exit";
-        cout << "\nEnter Your Choice : ";
-        cin >> ch;
-        switch(ch)
+        cout << "-----STUDENT RECORDS-----" << endl;
+        cout << "Enter 1 for adding a record" << endl;
+        cout << "Enter 2 for displaying the records" << endl;
+        cout << "Enter 3 for searching a record" << endl;
+        cout << "Enter 4 for deleting a record" << endl;
+        cout << "Enter 0 to exit" << endl;
+        cin >> choice;
+
+        switch (choice)
         {
-            case 1:
-                obj.create();
-                break;
-            case 2:
-                obj.display();
-                break;
-            case 3:
-                obj.Delete();
-                break;
-            case 4:
-                key = obj.search();
-                if(key == 0)
-                    cout << "\n\tRecord Not Found!\n";
-                break;
-            case 5:
-                break;
+        case 1:
+            add_students();
+            break;
+        case 2:
+            read_students();
+            break;
+        case 3:
+            int roll_number;
+            cout << "Enter roll number of the student to be searched-\n";
+            cin >> roll_number;
+            search_students(roll_number);
+            break;
+        case 4:
+            cout << "Enter roll number of the student to be deleted-\n";
+            cin >> roll_number;
+            delete_students(roll_number);
+            break;
+        case 0:
+            break;
         }
-    } while(ch != 5);
-    return 1;
+    } while (choice != 0);
 }
