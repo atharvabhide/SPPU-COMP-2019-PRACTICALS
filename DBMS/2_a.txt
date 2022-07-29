@@ -1,0 +1,229 @@
+mysql> create table customers (cust_id int, cust_name varchar(50), product varchar(50), quantity int, total_price float);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into customers (cust_id, cust_name, product, quantity, total_price)
+    -> values (1, "A", "Slippers", 2, 100),
+    -> (2, "B", "Tshirt", 3, 300),
+    -> (3, "C", "Jeans", 4, 1600),
+    -> (4, "D", "Hoodie", 5, 2500),
+    -> (5, "E", "Sweater", 10, 10000);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++---------+-----------+----------+----------+-------------+
+| cust_id | cust_name | product  | quantity | total_price |
++---------+-----------+----------+----------+-------------+
+|       1 | A         | Slippers |        2 |         100 |
+|       2 | B         | Tshirt   |        3 |         300 |
+|       3 | C         | Jeans    |        4 |        1600 |
+|       4 | D         | Hoodie   |        5 |        2500 |
+|       5 | E         | Sweater  |       10 |       10000 |
++---------+-----------+----------+----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customers add price_per_qnty float;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++---------+-----------+----------+----------+-------------+----------------+
+| cust_id | cust_name | product  | quantity | total_price | price_per_qnty |
++---------+-----------+----------+----------+-------------+----------------+
+|       1 | A         | Slippers |        2 |         100 |           NULL |
+|       2 | B         | Tshirt   |        3 |         300 |           NULL |
+|       3 | C         | Jeans    |        4 |        1600 |           NULL |
+|       4 | D         | Hoodie   |        5 |        2500 |           NULL |
+|       5 | E         | Sweater  |       10 |       10000 |           NULL |
++---------+-----------+----------+----------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customers modify cust_id int primary key;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe customers;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| cust_id        | int(11)     | NO   | PRI | NULL    |       |
+| cust_name      | varchar(50) | YES  |     | NULL    |       |
+| product        | varchar(50) | YES  |     | NULL    |       |
+| quantity       | int(11)     | YES  |     | NULL    |       |
+| total_price    | float       | YES  |     | NULL    |       |
+| price_per_qnty | float       | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table customers drop column cust_id;
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++-----------+----------+----------+-------------+----------------+
+| cust_name | product  | quantity | total_price | price_per_qnty |
++-----------+----------+----------+-------------+----------------+
+| A         | Slippers |        2 |         100 |           NULL |
+| B         | Tshirt   |        3 |         300 |           NULL |
+| C         | Jeans    |        4 |        1600 |           NULL |
+| D         | Hoodie   |        5 |        2500 |           NULL |
+| E         | Sweater  |       10 |       10000 |           NULL |
++-----------+----------+----------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> describe customers;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| cust_name      | varchar(50) | YES  |     | NULL    |       |
+| product        | varchar(50) | YES  |     | NULL    |       |
+| quantity       | int(11)     | YES  |     | NULL    |       |
+| total_price    | float       | YES  |     | NULL    |       |
+| price_per_qnty | float       | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customers add cust_id int primary key auto_increment;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe customers;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| cust_name      | varchar(50) | YES  |     | NULL    |                |
+| product        | varchar(50) | YES  |     | NULL    |                |
+| quantity       | int(11)     | YES  |     | NULL    |                |
+| total_price    | float       | YES  |     | NULL    |                |
+| price_per_qnty | float       | YES  |     | NULL    |                |
+| cust_id        | int(11)     | NO   | PRI | NULL    | auto_increment |
++----------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customers;
++-----------+----------+----------+-------------+----------------+---------+
+| cust_name | product  | quantity | total_price | price_per_qnty | cust_id |
++-----------+----------+----------+-------------+----------------+---------+
+| A         | Slippers |        2 |         100 |           NULL |       1 |
+| B         | Tshirt   |        3 |         300 |           NULL |       2 |
+| C         | Jeans    |        4 |        1600 |           NULL |       3 |
+| D         | Hoodie   |        5 |        2500 |           NULL |       4 |
+| E         | Sweater  |       10 |       10000 |           NULL |       5 |
++-----------+----------+----------+-------------+----------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customers modify cust_id int first;
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++---------+-----------+----------+----------+-------------+----------------+
+| cust_id | cust_name | product  | quantity | total_price | price_per_qnty |
++---------+-----------+----------+----------+-------------+----------------+
+|       1 | A         | Slippers |        2 |         100 |           NULL |
+|       2 | B         | Tshirt   |        3 |         300 |           NULL |
+|       3 | C         | Jeans    |        4 |        1600 |           NULL |
+|       4 | D         | Hoodie   |        5 |        2500 |           NULL |
+|       5 | E         | Sweater  |       10 |       10000 |           NULL |
++---------+-----------+----------+----------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> describe customers;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| cust_id        | int(11)     | NO   | PRI | NULL    |       |
+| cust_name      | varchar(50) | YES  |     | NULL    |       |
+| product        | varchar(50) | YES  |     | NULL    |       |
+| quantity       | int(11)     | YES  |     | NULL    |       |
+| total_price    | float       | YES  |     | NULL    |       |
+| price_per_qnty | float       | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> update customers set price_per_qnty = 50 where cust_name="A";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set price_per_qnty = 100 where cust_name="B";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set price_per_qnty = 400 where cust_name="C";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set price_per_qnty = 500 where cust_name="D";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set price_per_qnty=1000 where cust_name="E";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customers;
++---------+-----------+----------+----------+-------------+----------------+
+| cust_id | cust_name | product  | quantity | total_price | price_per_qnty |
++---------+-----------+----------+----------+-------------+----------------+
+|       1 | A         | Slippers |        2 |         100 |             50 |
+|       2 | B         | Tshirt   |        3 |         300 |            100 |
+|       3 | C         | Jeans    |        4 |        1600 |            400 |
+|       4 | D         | Hoodie   |        5 |        2500 |            500 |
+|       5 | E         | Sweater  |       10 |       10000 |           1000 |
++---------+-----------+----------+----------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers as cust;
++---------+-----------+----------+----------+-------------+----------------+
+| cust_id | cust_name | product  | quantity | total_price | price_per_qnty |
++---------+-----------+----------+----------+-------------+----------------+
+|       1 | A         | Slippers |        2 |         100 |             50 |
+|       2 | B         | Tshirt   |        3 |         300 |            100 |
+|       3 | C         | Jeans    |        4 |        1600 |            400 |
+|       4 | D         | Hoodie   |        5 |        2500 |            500 |
+|       5 | E         | Sweater  |       10 |       10000 |           1000 |
++---------+-----------+----------+----------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> create view cust_view as select cust_id, cust_name from customers;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from view;
+ERROR 1146 (42S02): Table 'atharva.view' doesn't exist
+mysql> select * from cust_view;
++---------+-----------+
+| cust_id | cust_name |
++---------+-----------+
+|       1 | A         |
+|       2 | B         |
+|       3 | C         |
+|       4 | D         |
+|       5 | E         |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> alter view cust_view as select cust_id, product, total_price from customers;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from cust_view;
++---------+----------+-------------+
+| cust_id | product  | total_price |
++---------+----------+-------------+
+|       1 | Slippers |         100 |
+|       2 | Tshirt   |         300 |
+|       3 | Jeans    |        1600 |
+|       4 | Hoodie   |        2500 |
+|       5 | Sweater  |       10000 |
++---------+----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> drop view cust_view;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create index cust_index on customers(cust_name);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> drop index cust_index on customers;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
