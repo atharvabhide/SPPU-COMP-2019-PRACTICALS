@@ -1,25 +1,158 @@
-use TE121;
-drop TABLE Orders;
-drop table Customers;
-drop table cust_bkp;
-CREATE TABLE Customers (id INT PRIMARY KEY NOT NULL,c_name VARCHAR(10), age INT, address VARCHAR(50),salary FLOAT);
-CREATE TABLE Orders (o_id INT PRIMARY KEY, o_date DATE, cid INT, amount FLOAT, FOREIGN KEY (cid) REFERENCES Customers(id) ON DELETE CASCADE ON UPDATE CASCADE);
-INSERT INTO Customers (id,c_name,age,address,salary) VALUES (1,"Ayush",20,"Karve nagar",10000),(2,"Cust 2",24,"Kothrud",20000),(3,"Cust 3",30,"Deccan",30000),(4,"Cust 4",28,"Paud road",35000),(5,"Cust 5",22,"Karve road",15000),(6,"Cust 6",28,"Kothrud",20000);
-INSERT INTO Orders (o_id,o_date,cid,amount) VALUES (1,"2015-09-16",2,5000),(2,"2016-09-04",3,4000),(3,"2016-04-12",1,6000),(4,"2021-06-15",4,3000),(5,"2020-08-14",5,1500);
-SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c INNER JOIN Orders o on c.id = o.cid;
-SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c LEFT OUTER JOIN Orders o on c.id = o.cid;
-SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c RIGHT OUTER JOIN Orders o on c.id = o.cid;
-SELECT c.id,c.c_name FROM Customers c left join Orders o on c.id=o.cid UNION ALL SELECT o.amount,o.o_date from Orders o right join Customers c on c.id=o.cid;
-SELECT * from Customers a, Customers b WHERE a.address = b.address AND a.id != b.id;
-SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c CROSS JOIN Orders o;
+mysql> create database TE121;
+Query OK, 1 row affected (0.35 sec)
 
-SELECT * FROM Customers WHERE salary > 20000;
+mysql> use TE121;
+Database changed
+mysql> drop TABLE Orders;
+ERROR 1051 (42S02): Unknown table 'te121.orders'
+mysql> CREATE TABLE Customers (id INT PRIMARY KEY NOT NULL,c_name VARCHAR(10), age INT, address VARCHAR(50),salary FLOAT);
+Query OK, 0 rows affected (2.45 sec)
 
-CREATE TABLE cust_bkp (SELECT * FROM Customers);
+mysql> CREATE TABLE Orders (o_id INT PRIMARY KEY, o_date DATE, cid INT, amount FLOAT, FOREIGN KEY (cid) REFERENCES Customers(id) ON DELETE CASCADE ON UPDATE CASCADE);
+Query OK, 0 rows affected (1.74 sec)
 
-select * from cust_bkp;
-select * from Customers;
+mysql> INSERT INTO Customers (id,c_name,age,address,salary) VALUES (1,"Ayush",20,"Karve nagar",10000),(2,"Cust 2",24,"Kothrud",20000),(3,"Cust 3",30,"Deccan",30000),(4,"Cust 4",28,"Paud road",35000),(5,"Cust 5",22,"Karve road",15000),(6,"Cust 6",28,"Kothrud",20000);
+Query OK, 6 rows affected (0.27 sec)
+Records: 6  Duplicates: 0  Warnings: 0
 
-UPDATE Customers c set salary=(SELECT (salary + 0.1*salary) from cust_bkp b WHERE c.id=b.id);
+mysql> INSERT INTO Orders (o_id,o_date,cid,amount) VALUES (1,"2015-09-16",2,5000),(2,"2016-09-04",3,4000),(3,"2016-04-12",1,6000),(4,"2021-06-15",4,3000),(5,"2020-08-14",5,1500);
+Query OK, 5 rows affected (0.24 sec)
+Records: 5  Duplicates: 0  Warnings: 0
 
-DELETE from Customers WHERE age > 26;
+mysql> SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c INNER JOIN Orders o on c.id = o.cid;
++----+--------+--------+------------+
+| id | c_name | amount | o_date     |
++----+--------+--------+------------+
+|  2 | Cust 2 |   5000 | 2015-09-16 |
+|  3 | Cust 3 |   4000 | 2016-09-04 |
+|  1 | Ayush  |   6000 | 2016-04-12 |
+|  4 | Cust 4 |   3000 | 2021-06-15 |
+|  5 | Cust 5 |   1500 | 2020-08-14 |
++----+--------+--------+------------+
+5 rows in set (0.02 sec)
+
+mysql> SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c LEFT OUTER JOIN Orders o on c.id = o.cid;
++----+--------+--------+------------+
+| id | c_name | amount | o_date     |
++----+--------+--------+------------+
+|  1 | Ayush  |   6000 | 2016-04-12 |
+|  2 | Cust 2 |   5000 | 2015-09-16 |
+|  3 | Cust 3 |   4000 | 2016-09-04 |
+|  4 | Cust 4 |   3000 | 2021-06-15 |
+|  5 | Cust 5 |   1500 | 2020-08-14 |
+|  6 | Cust 6 |   NULL | NULL       |
++----+--------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT c.id,c.c_name FROM Customers c left join Orders o on c.id=o.cid UNION ALL SELECT o.amount,o.o_date from Orders o right join Customers c on c.id=o.cid;
++------+------------+
+| id   | c_name     |
++------+------------+
+|    1 | Ayush      |
+|    2 | Cust 2     |
+|    3 | Cust 3     |
+|    4 | Cust 4     |
+|    5 | Cust 5     |
+|    6 | Cust 6     |
+| 6000 | 2016-04-12 |
+| 5000 | 2015-09-16 |
+| 4000 | 2016-09-04 |
+| 3000 | 2021-06-15 |
+| 1500 | 2020-08-14 |
+| NULL | NULL       |
++------+------------+
+12 rows in set (0.04 sec)
+
+mysql> SELECT * from Customers a, Customers b WHERE a.address = b.address AND a.id != b.id;
++----+--------+------+---------+--------+----+--------+------+---------+--------+
+| id | c_name | age  | address | salary | id | c_name | age  | address | salary |
++----+--------+------+---------+--------+----+--------+------+---------+--------+
+|  6 | Cust 6 |   28 | Kothrud |  20000 |  2 | Cust 2 |   24 | Kothrud |  20000 |
+|  2 | Cust 2 |   24 | Kothrud |  20000 |  6 | Cust 6 |   28 | Kothrud |  20000 |
++----+--------+------+---------+--------+----+--------+------+---------+--------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c CROSS JOIN Orders o;
++----+--------+--------+------------+
+| id | c_name | amount | o_date     |
++----+--------+--------+------------+
+|  1 | Ayush  |   1500 | 2020-08-14 |
+|  1 | Ayush  |   3000 | 2021-06-15 |
+|  1 | Ayush  |   6000 | 2016-04-12 |
+|  1 | Ayush  |   4000 | 2016-09-04 |
+|  1 | Ayush  |   5000 | 2015-09-16 |
+|  2 | Cust 2 |   1500 | 2020-08-14 |
+|  2 | Cust 2 |   3000 | 2021-06-15 |
+|  2 | Cust 2 |   6000 | 2016-04-12 |
+|  2 | Cust 2 |   4000 | 2016-09-04 |
+|  2 | Cust 2 |   5000 | 2015-09-16 |
+|  3 | Cust 3 |   1500 | 2020-08-14 |
+|  3 | Cust 3 |   3000 | 2021-06-15 |
+|  3 | Cust 3 |   6000 | 2016-04-12 |
+|  3 | Cust 3 |   4000 | 2016-09-04 |
+|  3 | Cust 3 |   5000 | 2015-09-16 |
+|  4 | Cust 4 |   1500 | 2020-08-14 |
+|  4 | Cust 4 |   3000 | 2021-06-15 |
+|  4 | Cust 4 |   6000 | 2016-04-12 |
+|  4 | Cust 4 |   4000 | 2016-09-04 |
+|  4 | Cust 4 |   5000 | 2015-09-16 |
+|  5 | Cust 5 |   1500 | 2020-08-14 |
+|  5 | Cust 5 |   3000 | 2021-06-15 |
+|  5 | Cust 5 |   6000 | 2016-04-12 |
+|  5 | Cust 5 |   4000 | 2016-09-04 |
+|  5 | Cust 5 |   5000 | 2015-09-16 |
+|  6 | Cust 6 |   1500 | 2020-08-14 |
+|  6 | Cust 6 |   3000 | 2021-06-15 |
+|  6 | Cust 6 |   6000 | 2016-04-12 |
+|  6 | Cust 6 |   4000 | 2016-09-04 |
+|  6 | Cust 6 |   5000 | 2015-09-16 |
++----+--------+--------+------------+
+30 rows in set (0.02 sec)
+
+mysql> SELECT * FROM Customers WHERE salary > 20000;
++----+--------+------+-----------+--------+
+| id | c_name | age  | address   | salary |
++----+--------+------+-----------+--------+
+|  3 | Cust 3 |   30 | Deccan    |  30000 |
+|  4 | Cust 4 |   28 | Paud road |  35000 |
++----+--------+------+-----------+--------+
+2 rows in set (0.02 sec)
+
+mysql> CREATE TABLE cust_bkp (SELECT * FROM Customers);
+Query OK, 6 rows affected (0.75 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from cust_bkp;
++----+--------+------+-------------+--------+
+| id | c_name | age  | address     | salary |
++----+--------+------+-------------+--------+
+|  1 | Ayush  |   20 | Karve nagar |  10000 |
+|  2 | Cust 2 |   24 | Kothrud     |  20000 |
+|  3 | Cust 3 |   30 | Deccan      |  30000 |
+|  4 | Cust 4 |   28 | Paud road   |  35000 |
+|  5 | Cust 5 |   22 | Karve road  |  15000 |
+|  6 | Cust 6 |   28 | Kothrud     |  20000 |
++----+--------+------+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Customers;
++----+--------+------+-------------+--------+
+| id | c_name | age  | address     | salary |
++----+--------+------+-------------+--------+
+|  1 | Ayush  |   20 | Karve nagar |  10000 |
+|  2 | Cust 2 |   24 | Kothrud     |  20000 |
+|  3 | Cust 3 |   30 | Deccan      |  30000 |
+|  4 | Cust 4 |   28 | Paud road   |  35000 |
+|  5 | Cust 5 |   22 | Karve road  |  15000 |
+|  6 | Cust 6 |   28 | Kothrud     |  20000 |
++----+--------+------+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE Customers c set salary=(SELECT (salary + 0.1*salary) from cust_bkp b WHERE c.id=b.id);
+Query OK, 6 rows affected (0.21 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> DELETE from Customers WHERE age > 26;
+Query OK, 3 rows affected (0.30 sec)
+
+mysql>
