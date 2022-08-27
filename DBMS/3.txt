@@ -1,0 +1,25 @@
+use TE121;
+drop TABLE Orders;
+drop table Customers;
+drop table cust_bkp;
+CREATE TABLE Customers (id INT PRIMARY KEY NOT NULL,c_name VARCHAR(10), age INT, address VARCHAR(50),salary FLOAT);
+CREATE TABLE Orders (o_id INT PRIMARY KEY, o_date DATE, cid INT, amount FLOAT, FOREIGN KEY (cid) REFERENCES Customers(id) ON DELETE CASCADE ON UPDATE CASCADE);
+INSERT INTO Customers (id,c_name,age,address,salary) VALUES (1,"Ayush",20,"Karve nagar",10000),(2,"Cust 2",24,"Kothrud",20000),(3,"Cust 3",30,"Deccan",30000),(4,"Cust 4",28,"Paud road",35000),(5,"Cust 5",22,"Karve road",15000),(6,"Cust 6",28,"Kothrud",20000);
+INSERT INTO Orders (o_id,o_date,cid,amount) VALUES (1,"2015-09-16",2,5000),(2,"2016-09-04",3,4000),(3,"2016-04-12",1,6000),(4,"2021-06-15",4,3000),(5,"2020-08-14",5,1500);
+SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c INNER JOIN Orders o on c.id = o.cid;
+SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c LEFT OUTER JOIN Orders o on c.id = o.cid;
+SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c RIGHT OUTER JOIN Orders o on c.id = o.cid;
+SELECT c.id,c.c_name FROM Customers c left join Orders o on c.id=o.cid UNION ALL SELECT o.amount,o.o_date from Orders o right join Customers c on c.id=o.cid;
+SELECT * from Customers a, Customers b WHERE a.address = b.address AND a.id != b.id;
+SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c CROSS JOIN Orders o;
+
+SELECT * FROM Customers WHERE salary > 20000;
+
+CREATE TABLE cust_bkp (SELECT * FROM Customers);
+
+select * from cust_bkp;
+select * from Customers;
+
+UPDATE Customers c set salary=(SELECT (salary + 0.1*salary) from cust_bkp b WHERE c.id=b.id);
+
+DELETE from Customers WHERE age > 26;
