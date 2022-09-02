@@ -1,158 +1,286 @@
-mysql> create database TE121;
-Query OK, 1 row affected (0.35 sec)
+mysql> create database atharva;
+Query OK, 1 row affected (0.00 sec)
 
-mysql> use TE121;
+mysql> use atharva;
 Database changed
-mysql> drop TABLE Orders;
-ERROR 1051 (42S02): Unknown table 'te121.orders'
-mysql> CREATE TABLE Customers (id INT PRIMARY KEY NOT NULL,c_name VARCHAR(10), age INT, address VARCHAR(50),salary FLOAT);
-Query OK, 0 rows affected (2.45 sec)
-
-mysql> CREATE TABLE Orders (o_id INT PRIMARY KEY, o_date DATE, cid INT, amount FLOAT, FOREIGN KEY (cid) REFERENCES Customers(id) ON DELETE CASCADE ON UPDATE CASCADE);
-Query OK, 0 rows affected (1.74 sec)
-
-mysql> INSERT INTO Customers (id,c_name,age,address,salary) VALUES (1,"Ayush",20,"Karve nagar",10000),(2,"Cust 2",24,"Kothrud",20000),(3,"Cust 3",30,"Deccan",30000),(4,"Cust 4",28,"Paud road",35000),(5,"Cust 5",22,"Karve road",15000),(6,"Cust 6",28,"Kothrud",20000);
-Query OK, 6 rows affected (0.27 sec)
-Records: 6  Duplicates: 0  Warnings: 0
-
-mysql> INSERT INTO Orders (o_id,o_date,cid,amount) VALUES (1,"2015-09-16",2,5000),(2,"2016-09-04",3,4000),(3,"2016-04-12",1,6000),(4,"2021-06-15",4,3000),(5,"2020-08-14",5,1500);
-Query OK, 5 rows affected (0.24 sec)
-Records: 5  Duplicates: 0  Warnings: 0
-
-mysql> SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c INNER JOIN Orders o on c.id = o.cid;
-+----+--------+--------+------------+
-| id | c_name | amount | o_date     |
-+----+--------+--------+------------+
-|  2 | Cust 2 |   5000 | 2015-09-16 |
-|  3 | Cust 3 |   4000 | 2016-09-04 |
-|  1 | Ayush  |   6000 | 2016-04-12 |
-|  4 | Cust 4 |   3000 | 2021-06-15 |
-|  5 | Cust 5 |   1500 | 2020-08-14 |
-+----+--------+--------+------------+
-5 rows in set (0.02 sec)
-
-mysql> SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c LEFT OUTER JOIN Orders o on c.id = o.cid;
-+----+--------+--------+------------+
-| id | c_name | amount | o_date     |
-+----+--------+--------+------------+
-|  1 | Ayush  |   6000 | 2016-04-12 |
-|  2 | Cust 2 |   5000 | 2015-09-16 |
-|  3 | Cust 3 |   4000 | 2016-09-04 |
-|  4 | Cust 4 |   3000 | 2021-06-15 |
-|  5 | Cust 5 |   1500 | 2020-08-14 |
-|  6 | Cust 6 |   NULL | NULL       |
-+----+--------+--------+------------+
-6 rows in set (0.00 sec)
-
-mysql> SELECT c.id,c.c_name FROM Customers c left join Orders o on c.id=o.cid UNION ALL SELECT o.amount,o.o_date from Orders o right join Customers c on c.id=o.cid;
-+------+------------+
-| id   | c_name     |
-+------+------------+
-|    1 | Ayush      |
-|    2 | Cust 2     |
-|    3 | Cust 3     |
-|    4 | Cust 4     |
-|    5 | Cust 5     |
-|    6 | Cust 6     |
-| 6000 | 2016-04-12 |
-| 5000 | 2015-09-16 |
-| 4000 | 2016-09-04 |
-| 3000 | 2021-06-15 |
-| 1500 | 2020-08-14 |
-| NULL | NULL       |
-+------+------------+
-12 rows in set (0.04 sec)
-
-mysql> SELECT * from Customers a, Customers b WHERE a.address = b.address AND a.id != b.id;
-+----+--------+------+---------+--------+----+--------+------+---------+--------+
-| id | c_name | age  | address | salary | id | c_name | age  | address | salary |
-+----+--------+------+---------+--------+----+--------+------+---------+--------+
-|  6 | Cust 6 |   28 | Kothrud |  20000 |  2 | Cust 2 |   24 | Kothrud |  20000 |
-|  2 | Cust 2 |   24 | Kothrud |  20000 |  6 | Cust 6 |   28 | Kothrud |  20000 |
-+----+--------+------+---------+--------+----+--------+------+---------+--------+
-2 rows in set (0.02 sec)
-
-mysql> SELECT c.id, c.c_name, o.amount, o.o_date FROM Customers c CROSS JOIN Orders o;
-+----+--------+--------+------------+
-| id | c_name | amount | o_date     |
-+----+--------+--------+------------+
-|  1 | Ayush  |   1500 | 2020-08-14 |
-|  1 | Ayush  |   3000 | 2021-06-15 |
-|  1 | Ayush  |   6000 | 2016-04-12 |
-|  1 | Ayush  |   4000 | 2016-09-04 |
-|  1 | Ayush  |   5000 | 2015-09-16 |
-|  2 | Cust 2 |   1500 | 2020-08-14 |
-|  2 | Cust 2 |   3000 | 2021-06-15 |
-|  2 | Cust 2 |   6000 | 2016-04-12 |
-|  2 | Cust 2 |   4000 | 2016-09-04 |
-|  2 | Cust 2 |   5000 | 2015-09-16 |
-|  3 | Cust 3 |   1500 | 2020-08-14 |
-|  3 | Cust 3 |   3000 | 2021-06-15 |
-|  3 | Cust 3 |   6000 | 2016-04-12 |
-|  3 | Cust 3 |   4000 | 2016-09-04 |
-|  3 | Cust 3 |   5000 | 2015-09-16 |
-|  4 | Cust 4 |   1500 | 2020-08-14 |
-|  4 | Cust 4 |   3000 | 2021-06-15 |
-|  4 | Cust 4 |   6000 | 2016-04-12 |
-|  4 | Cust 4 |   4000 | 2016-09-04 |
-|  4 | Cust 4 |   5000 | 2015-09-16 |
-|  5 | Cust 5 |   1500 | 2020-08-14 |
-|  5 | Cust 5 |   3000 | 2021-06-15 |
-|  5 | Cust 5 |   6000 | 2016-04-12 |
-|  5 | Cust 5 |   4000 | 2016-09-04 |
-|  5 | Cust 5 |   5000 | 2015-09-16 |
-|  6 | Cust 6 |   1500 | 2020-08-14 |
-|  6 | Cust 6 |   3000 | 2021-06-15 |
-|  6 | Cust 6 |   6000 | 2016-04-12 |
-|  6 | Cust 6 |   4000 | 2016-09-04 |
-|  6 | Cust 6 |   5000 | 2015-09-16 |
-+----+--------+--------+------------+
-30 rows in set (0.02 sec)
-
-mysql> SELECT * FROM Customers WHERE salary > 20000;
-+----+--------+------+-----------+--------+
-| id | c_name | age  | address   | salary |
-+----+--------+------+-----------+--------+
-|  3 | Cust 3 |   30 | Deccan    |  30000 |
-|  4 | Cust 4 |   28 | Paud road |  35000 |
-+----+--------+------+-----------+--------+
-2 rows in set (0.02 sec)
-
-mysql> CREATE TABLE cust_bkp (SELECT * FROM Customers);
-Query OK, 6 rows affected (0.75 sec)
-Records: 6  Duplicates: 0  Warnings: 0
-
-mysql> select * from cust_bkp;
-+----+--------+------+-------------+--------+
-| id | c_name | age  | address     | salary |
-+----+--------+------+-------------+--------+
-|  1 | Ayush  |   20 | Karve nagar |  10000 |
-|  2 | Cust 2 |   24 | Kothrud     |  20000 |
-|  3 | Cust 3 |   30 | Deccan      |  30000 |
-|  4 | Cust 4 |   28 | Paud road   |  35000 |
-|  5 | Cust 5 |   22 | Karve road  |  15000 |
-|  6 | Cust 6 |   28 | Kothrud     |  20000 |
-+----+--------+------+-------------+--------+
-6 rows in set (0.00 sec)
-
-mysql> select * from Customers;
-+----+--------+------+-------------+--------+
-| id | c_name | age  | address     | salary |
-+----+--------+------+-------------+--------+
-|  1 | Ayush  |   20 | Karve nagar |  10000 |
-|  2 | Cust 2 |   24 | Kothrud     |  20000 |
-|  3 | Cust 3 |   30 | Deccan      |  30000 |
-|  4 | Cust 4 |   28 | Paud road   |  35000 |
-|  5 | Cust 5 |   22 | Karve road  |  15000 |
-|  6 | Cust 6 |   28 | Kothrud     |  20000 |
-+----+--------+------+-------------+--------+
-6 rows in set (0.00 sec)
-
-mysql> UPDATE Customers c set salary=(SELECT (salary + 0.1*salary) from cust_bkp b WHERE c.id=b.id);
-Query OK, 6 rows affected (0.21 sec)
-Rows matched: 6  Changed: 6  Warnings: 0
-
-mysql> DELETE from Customers WHERE age > 26;
-Query OK, 3 rows affected (0.30 sec)
+mysql>
+mysql> create table customers (id int primary key , name varchar(255), age int, address varchar(255), salary int, on delete cascade on update cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on delete cascade on update cascade)' at line 1
+mysql> create table customers (id int primary key , name varchar(255), age int, address varchar(255), salary int);
+Query OK, 0 rows affected (0.32 sec)
 
 mysql>
+mysql> create table orders (o_id int primary key, o_date date, customer_id int, amount int, foreign key (customer_id) references customers(id) on delete cascade on update cascade);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> describe customers;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int(11)      | NO   | PRI | NULL    |       |
+| name    | varchar(255) | YES  |     | NULL    |       |
+| age     | int(11)      | YES  |     | NULL    |       |
+| address | varchar(255) | YES  |     | NULL    |       |
+| salary  | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into customers (id, name, age, address, salary)
+    -> values (1, "X", 10, "X1", 100),
+    -> (2, "Y", 11, "Y1", 200),
+    -> (3, "Z", 12, "Z1", 300),
+    -> (4, "A", 13, "A1", 400),
+    -> (5, "B", 14, "B1", 500);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> describe orders;
++-------------+---------+------+-----+---------+-------+
+| Field       | Type    | Null | Key | Default | Extra |
++-------------+---------+------+-----+---------+-------+
+| o_id        | int(11) | NO   | PRI | NULL    |       |
+| o_date      | date    | YES  |     | NULL    |       |
+| customer_id | int(11) | YES  | MUL | NULL    |       |
+| amount      | int(11) | YES  |     | NULL    |       |
++-------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into orders(o_id, o_date, customer_id, amount)
+    -> values (100, "2022-08-1", 1, 50),
+    -> (200, "2022-08-2", 2, 60),
+    -> (300, "2022-08-3", 3, 70),
+    -> (400, "2022-08-4", 6, 80),
+    -> (500, "2022-08-5", 7, 90);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`atharva`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+mysql> insert into orders(o_id, o_date, id, amount) values (100, "2022-08-1", 1, 50), (200, "2022-08-2", 2, 60), (300, "2022-08-3", 3, 70), (400, "2022-08-4", 6, 80), (500, "2022-08-5", 7, 90);
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql>
+mysql> drop table orders;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> describe customers;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int(11)      | NO   | PRI | NULL    |       |
+| name    | varchar(255) | YES  |     | NULL    |       |
+| age     | int(11)      | YES  |     | NULL    |       |
+| address | varchar(255) | YES  |     | NULL    |       |
+| salary  | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create table orders (o_id int primary key, o_date date, id int, amount salary, foreign key(id) references customers(id) on update cascade on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary, foreign key(id) references customers(id) on update cascade on delete cas' at line 1
+mysql> create table orders (o_id int primary key, o_date date, id int, amount salary, foreign key(id) references customers(id) on update cascade on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary, foreign key(id) references customers(id) on update cascade on delete cas' at line 1
+mysql> create table orders (o_id int primary key, o_date date, c_id int, amount salary, foreign key(c_id) references customers(id) on update cascade on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary, foreign key(c_id) references customers(id) on update cascade on delete c' at line 1
+mysql> create table orders (o_id int primary key, o_date date, id int, amount int, foreign key (id) references customers(id) on delete cascadeon update cascade);
+Query OK, 0 rows affected (0.40 sec)
+
+mysql>
+mysql> describe customers;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int(11)      | NO   | PRI | NULL    |       |
+| name    | varchar(255) | YES  |     | NULL    |       |
+| age     | int(11)      | YES  |     | NULL    |       |
+| address | varchar(255) | YES  |     | NULL    |       |
+| salary  | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> describe orders;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| o_id   | int(11) | NO   | PRI | NULL    |       |
+| o_date | date    | YES  |     | NULL    |       |
+| id     | int(11) | YES  | MUL | NULL    |       |
+| amount | int(11) | YES  |     | NULL    |       |
++--------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into orders(o_id, o_date, id, amount)
+    -> values (100, "2022-08-01", 1, 50);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into orders(o_id, o_date, id, amount) values (101, "2022-08-02", 2, 60);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into orders(o_id, o_date, id, amount) values (102, "2022-08-03", 3, 70);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into orders(o_id, o_date, id, amount) values (103, "2022-08-04", 6, 80);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`atharva`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+mysql> insert into orders(o_id, o_date, id, amount) values (103, "2022-08-04", 4, 80);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into orders(o_id, o_date, id, amount) values (104, "2022-08-04", 5, 100);
+Query OK, 1 row affected (0.07 sec)
+
+mysql>
+mysql> select * from orders;
++------+------------+------+--------+
+| o_id | o_date     | id   | amount |
++------+------------+------+--------+
+|  100 | 2022-08-01 |    1 |     50 |
+|  101 | 2022-08-02 |    2 |     60 |
+|  102 | 2022-08-03 |    3 |     70 |
+|  103 | 2022-08-04 |    4 |     80 |
+|  104 | 2022-08-04 |    5 |    100 |
++------+------------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers;
++----+------+------+---------+--------+
+| id | name | age  | address | salary |
++----+------+------+---------+--------+
+|  1 | X    |   10 | X1      |    100 |
+|  2 | Y    |   11 | Y1      |    200 |
+|  3 | Z    |   12 | Z1      |    300 |
+|  4 | A    |   13 | A1      |    400 |
+|  5 | B    |   14 | B1      |    500 |
++----+------+------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select id, name, amount, o_date on customers join orders on customers.id=orders.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on customers join orders on customers.id=orders.id' at line 1
+mysql> select id, name, amount, o_date on customers inner join orders on customers.id=orders.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on customers inner join orders on customers.id=orders.id' at line 1
+mysql> select id, name, amount, o_date on orders join customers on order.id=customers.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on orders join customers on order.id=customers.id' at line 1
+mysql>
+mysql> select id, name, amount, o_date from customers join orders on customers.id=orders.id;
+ERROR 1052 (23000): Column 'id' in field list is ambiguous
+mysql> select customers.id, customers.name, orders.amount, orders.o_date from customers join orders on customers.id=orders.id;
++----+------+--------+------------+
+| id | name | amount | o_date     |
++----+------+--------+------------+
+|  1 | X    |     50 | 2022-08-01 |
+|  2 | Y    |     60 | 2022-08-02 |
+|  3 | Z    |     70 | 2022-08-03 |
+|  4 | A    |     80 | 2022-08-04 |
+|  5 | B    |    100 | 2022-08-04 |
++----+------+--------+------------+
+5 rows in set (0.02 sec)
+
+mysql> select c.id, c.name, o.amount, o.o_date from customers c left join orders o on c.id=o.id;
++----+------+--------+------------+
+| id | name | amount | o_date     |
++----+------+--------+------------+
+|  1 | X    |     50 | 2022-08-01 |
+|  2 | Y    |     60 | 2022-08-02 |
+|  3 | Z    |     70 | 2022-08-03 |
+|  4 | A    |     80 | 2022-08-04 |
+|  5 | B    |    100 | 2022-08-04 |
++----+------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select c.id, c.name, o.amount, o.o_date from customers c right join orders o on c.id=o.id;
++------+------+--------+------------+
+| id   | name | amount | o_date     |
++------+------+--------+------------+
+|    1 | X    |     50 | 2022-08-01 |
+|    2 | Y    |     60 | 2022-08-02 |
+|    3 | Z    |     70 | 2022-08-03 |
+|    4 | A    |     80 | 2022-08-04 |
+|    5 | B    |    100 | 2022-08-04 |
++------+------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> describe customers;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int(11)      | NO   | PRI | NULL    |       |
+| name    | varchar(255) | YES  |     | NULL    |       |
+| age     | int(11)      | YES  |     | NULL    |       |
+| address | varchar(255) | YES  |     | NULL    |       |
+| salary  | int(11)      | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> describe orders;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| o_id   | int(11) | NO   | PRI | NULL    |       |
+| o_date | date    | YES  |     | NULL    |       |
+| id     | int(11) | YES  | MUL | NULL    |       |
+| amount | int(11) | YES  |     | NULL    |       |
++--------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name from customers
+    -> union
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> select id,name from customers  
+    -> union all
+    -> select amount, o_date from orders;
++------+------------+
+| id   | name       |
++------+------------+
+|    1 | X          |
+|    2 | Y          |
+|    3 | Z          |
+|    4 | A          |
+|    5 | B          |
+|   50 | 2022-08-01 |
+|   60 | 2022-08-02 |
+|   70 | 2022-08-03 |
+|   80 | 2022-08-04 |
+|  100 | 2022-08-04 |
++------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select t1.name, t2.name from customers t1, customers t2 where t1.address=t2.address;
++------+------+
+| name | name |
++------+------+
+| X    | X    |
+| Y    | Y    |
+| Z    | Z    |
+| A    | A    |
+| B    | B    |
++------+------+
+5 rows in set (0.00 sec)
+
+mysql> select customers.id, customers.name, orders.amount, orders.o_date from customers,orders;
++----+------+--------+------------+
+| id | name | amount | o_date     |
++----+------+--------+------------+
+|  1 | X    |     50 | 2022-08-01 |
+|  2 | Y    |     50 | 2022-08-01 |
+|  3 | Z    |     50 | 2022-08-01 |
+|  4 | A    |     50 | 2022-08-01 |
+|  5 | B    |     50 | 2022-08-01 |
+|  1 | X    |     60 | 2022-08-02 |
+|  2 | Y    |     60 | 2022-08-02 |
+|  3 | Z    |     60 | 2022-08-02 |
+|  4 | A    |     60 | 2022-08-02 |
+|  5 | B    |     60 | 2022-08-02 |
+|  1 | X    |     70 | 2022-08-03 |
+|  2 | Y    |     70 | 2022-08-03 |
+|  3 | Z    |     70 | 2022-08-03 |
+|  4 | A    |     70 | 2022-08-03 |
+|  5 | B    |     70 | 2022-08-03 |
+|  1 | X    |     80 | 2022-08-04 |
+|  2 | Y    |     80 | 2022-08-04 |
+|  3 | Z    |     80 | 2022-08-04 |
+|  4 | A    |     80 | 2022-08-04 |
+|  5 | B    |     80 | 2022-08-04 |
+|  1 | X    |    100 | 2022-08-04 |
+|  2 | Y    |    100 | 2022-08-04 |
+|  3 | Z    |    100 | 2022-08-04 |
+|  4 | A    |    100 | 2022-08-04 |
+|  5 | B    |    100 | 2022-08-04 |
++----+------+--------+------------+
+25 rows in set (0.00 sec)
+
+mysql>
+
+
