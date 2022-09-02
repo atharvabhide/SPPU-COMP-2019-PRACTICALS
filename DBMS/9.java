@@ -3,16 +3,17 @@
   
  import java.util.*;  
  public class DMA1  
-  {  
+ {  
   public static void main(String[] args) throws Exception   
-   {   int rno,age;  
-      String col1,col2,col3,col4,col5,col6;    
-      Connection con=null;  
-      Statement s=null;  
-      ResultSet rs=null;  
-     int ch;  
-     boolean flag=true;  
-           Scanner sc=new Scanner(System.in);  
+   {   
+	  int rno,age;  
+      	  String col1,col2,col3,col4,col5,col6;    
+      	  Connection con=null;  
+      	  Statement s=null;  
+          ResultSet rs=null;  
+          int ch;  
+          boolean flag=true;  
+          Scanner sc=new Scanner(System.in);  
   try   
     {  
 
