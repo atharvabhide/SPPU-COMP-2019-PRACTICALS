@@ -1,0 +1,42 @@
+create table stud_marks(name varchar(20) primary key, total_marks int);
+create table result(roll int primary key, name varchar(20), class varchar(20), foreign key(name) references stud_marks(name));
+
+insert into stud_marks(name, total_marks) values ('X', 1450);
+insert into stud_marks(name, total_marks) values ('Y', 920);
+insert into stud_marks(name, total_marks) values ('Z', 850);
+
+insert into result(roll, name, class) values (1, 'X', 'distinction');
+insert into result(roll, name, class) values (2, 'Y', 'first class');
+insert into result(roll, name, class) values (3, 'Z', 'higher second class');
+
+declare
+    temp_class varchar(20);
+    temp_roll number;
+procedure get_class(temp_roll in int) is
+begin
+    select class into temp_class from result where roll=temp_roll;
+    if temp_class = 'distinction' then
+        dbms_output.put_line('Student has a distinction grade. This is done by using a procedure!');
+    elsif temp_class = 'first class' then
+        dbms_output.put_line('Student has a first class grade. This is done by using a procedure!');
+    else
+        dbms_output.put_line('Student has higher second class. This is done by using a procedure!');
+    end if;
+end;
+
+function get_grade(temp_roll in int) 
+return varchar
+is
+    temp varchar(20) := '';
+begin
+    select class into temp from result where roll=temp_roll;
+    return temp;
+end;
+
+begin
+    temp_roll := 1;
+    get_class(temp_roll);
+    temp_class := get_grade(temp_roll);
+    dbms_output.put_line('Student has a ' || temp_class || ' grade. This is done by using a function!');
+end;
+/
