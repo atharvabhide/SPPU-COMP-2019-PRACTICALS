@@ -1,0 +1,24 @@
+create table library(bno number,name varchar2(20),author varchar2(20),allowed_days number);
+
+insert into library values(1,'Hands on ML','Aurelion Geron',5);
+insert into library values(2,'Harry Potter','J.K Rowling',15);
+insert into library values(3,'Wimpy Kid','Jeff Kinney',10);
+insert into library values(4, 'Do epic shit', 'Ankur Warikoo', 13);
+insert into library values(5, 'Wings of Fire', 'Dr. A.P.J. Abdul Kadam', 14);
+
+create table lib_audit(bno number,old_allowed_days varchar2(20),new_all_days number);
+
+select * from library;
+
+create or replace trigger t1 before update or delete on library
+for each row
+begin
+insert into lib_audit values(:new.bno,:old.allowed_days,:new.allowed_days);
+end;
+/
+
+update library set allowed_days=2 where bno=3;
+
+select *from lib_audit;
+
+select * from library
