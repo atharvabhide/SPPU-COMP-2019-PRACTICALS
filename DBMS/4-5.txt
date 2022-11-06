@@ -1,92 +1,39 @@
-SQL> create table borrowe(rollno number(10),name varchar2(10),date_of_isuue date,nameofbook varchar2(20),status varchar2(5));
+create table borrower(rollno number(10),name varchar2(10),date_of_isuue date,nameofbook varchar2(20),status varchar2(5));
 
-Table created.
+create table fine(rollno number(10),date1 date,amount number(10));
 
-SQL> create table fin1(rollno number(10),date1 date,amount number(10));
+insert into borrower values(1,'pratiksha','10-MAR-2017','TOC','I');
 
-Table created.
+insert into borrower values(2,'niraj','01-FEB-2017','DBMS','I');
 
-SQL> select * from tab;
+insert into borrower values(3,'nirmal','01-FEB-2017','DBMS','R');
 
-TNAME			       TABTYPE	CLUSTERID
------------------------------- ------- ----------
-ACCOUNTS		       TABLE
-BORROWER		       TABLE
-CUST			       TABLE
-FINE			       TABLE
-TEMP			       TABLE
-
-
-SQL> insert into borrowe values(1,'pratiksha','10-03-2017','TOC','I');
-
-1 row created.
-
-SQL> insert into borrowe values(2,'niraj','01-02-2017','DBMS','I');
-
-1 row created.
-
-SQL> insert into borrowe values(3,'nirmal','01-02-2017','DBMS','R');
-
-1 row created.
-
-SQL> select * from borrowe;
-
-    ROLLNO NAME       DATE_OF_ NAMEOFBOOK	    STATU
----------- ---------- -------- -------------------- -----
-	 1 pratiksha  10-03-17 TOC		    I
-	 2 niraj      01-02-17 DBMS		    I
-	 3 nirmal     01-02-17 DBMS		    R
-
-SQL> declare
+declare
 rno number(3):=&rno;
 bname varchar2(30):='&bname';
 no_of_days number(5);
 issue_date date;
 famnt number:=0;
+
 begin
-select date_of_isuue into issue_date from borrowe where rollno=rno;
+select date_of_isuue into issue_date from borrower where rollno=rno;
 select sysdate-to_date(issue_date) days into no_of_days from dual;
-IF (no_of_days>15 and no_of_days<30) THEN
+
+if (no_of_days>15 and no_of_days<30) THEN
 famnt:=no_of_days*5;
 
 elsif no_of_days>30 THEN
 famnt:=15*5+(no_of_days-30)*50;
 end if;
 
-update borrowe set status='R' where rollno=rno;
+update borrower set status='R' where rollno=rno;
+
 if (famnt>0) then
-insert into fin1 values(rno,sysdate,famnt);
+insert into fine values(rno,sysdate,famnt);
 end if;
-EXCEPTION
-WHEN no_data_found THEN
+
+exception
+when no_data_found then
 dbms_output.put_line('Record not found');
 end; 
- 2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25  
- 26  /
-Enter value for rno: 1
-old   2: rno number(3):=&rno;
-new   2: rno number(3):=1;
-Enter value for bname: TOC
-old   3: bname varchar2(30):='&bname';
-new   3: bname varchar2(30):='TOC';
-
-PL/SQL procedure successfully completed.
-
-SQL> select *from fine;
-
-    ROLLNO DATE1	AMOUNT
----------- -------- ----------
-	 1 15-07-17	  4925
-
-SQL> 
-SQL> select * from borrower;
-
-    ROLLNO NAME       DATE_OF_ NAMEOFBOOK	    STATU
----------- ---------- -------- -------------------- -----
-	 1 pratiksha  10-03-17 TOC		    R
-	 2 niraj      01-02-17 DBMS		    I
-	 3 nirmal     01-02-17 DBMS		    R
-
-SQL> 
-
-
+/
