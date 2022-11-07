@@ -1,0 +1,31 @@
+> db.staff.insertMany([
+... {name : "x", age : 50, address : "x50"},
+... {name : "x", age : 30, address : "x30"},
+... {name : "y", age : 40, address : "y40"},
+... {name : "y", age : 30, address : "y30"}
+... ])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("6368c438853a89350321012a"),
+                ObjectId("6368c438853a89350321012b"),
+                ObjectId("6368c438853a89350321012c"),
+                ObjectId("6368c438853a89350321012d")
+        ]
+}
+
+> db.staff.find()
+{ "_id" : ObjectId("6368c438853a89350321012a"), "name" : "x", "age" : 50, "address" : "x50" }
+{ "_id" : ObjectId("6368c438853a89350321012b"), "name" : "x", "age" : 30, "address" : "x30" }
+{ "_id" : ObjectId("6368c438853a89350321012c"), "name" : "y", "age" : 40, "address" : "y40" }
+{ "_id" : ObjectId("6368c438853a89350321012d"), "name" : "y", "age" : 30, "address" : "y30" }
+
+> var mapfunction = function(){emit (this.name, this.age)}
+> var reducefunction = function(key, values){return Array.sum(values)}
+
+> db.staff.mapReduce(mapfunction, reducefunction, {out : "new"})
+{ "result" : "new", "ok" : 1 }
+> db.new.find()
+{ "_id" : "x", "value" : 80 }
+{ "_id" : "y", "value" : 70 }
+>
