@@ -1,0 +1,25 @@
+create table o_rollcall(rollno int, name varchar2(30));
+create table n_rollcall(rollno int, name varchar2(30));
+
+insert into o_rollcall(rollno, name) values(1, 'x');
+insert into o_rollcall(rollno, name) values(2, 'y');
+insert into o_rollcall(rollno, name) values(3, 'z');
+
+insert into n_rollcall(rollno, name) values(1, 'x');
+insert into n_rollcall(rollno, name) values(4, 'a');
+insert into n_rollcall(rollno, name) values(5, 'b');
+
+declare
+temp_rollno int;
+temp_name varchar2(30);
+cursor c1 is select rollno, name from o_rollcall where rollno not in (select rollno from n_rollcall);
+begin
+open c1;
+loop
+fetch c1 into temp_rollno, temp_name;
+exit when c1%notfound;
+insert into n_rollcall(rollno, name) values(temp_rollno, temp_name);
+end loop;
+close c1;
+end;
+/
