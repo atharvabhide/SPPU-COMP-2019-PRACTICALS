@@ -3,12 +3,6 @@ public class TableRow
     String symbol;
     int address;
     int index;
-    
-    public TableRow(String symbol, int address)
-    {
-        this.symbol = symbol;
-        this.address = address;
-    }
 
     public TableRow(String symbol, int address, int index)
     {
