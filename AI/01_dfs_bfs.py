@@ -1,52 +1,134 @@
 from queue import Queue
 
 class Graph:
-    def __init__(self, n:int):
-        self.n = n
-        self.graph = []
-        for i in range(n):
-            row = []
-            for j in range(n):
-                element = int(input(f"Enter distance between node {i} and {j}: "))
-                row.append(element)
-            self.graph.append(row)
-
-    def print(self):
-        for row in self.graph:
-            for element in row:
-                print(element, end=' ')
-            print()
+    n = None
+    matrix = []
+    dfs_list = []
+    bfs_list = []
+    def __init__(self, matrix:list, verbose:bool=False, n:int=0) -> None:
+        """
+        Args:
+            matrix (list): adjency matrix
+            verbose (bool, optional): To use terminal. Defaults to False.
+            n (int, optional): number of nodes. Defaults to 0.
+        """
+        if verbose:
+            for i in range(n):
+                row = []
+                for j in range(n):
+                    connection = int(input("Enter 0 if no connection between " + str(i) + " and " + str(j) + " else enter 1: "))
+                    row.append(connection)
+                self.matrix.append(row)
+        else:
+            self.matrix = matrix
+    def printGraph(self) -> None:
+        """
+        Function for displaying graph
+        """
+        for row in self.matrix:
+            print(row)
     
-    def dfs(self, start:int, visited:list[bool]):
-        visited[start] = True
-        print(start, end=' ')
-        for node in range(len(self.graph[start])):
-            if (visited[node] != True and self.graph[start][node] != 0 and self.graph[start][node] != -1):
+    def dfs(self, source:int, visited:list) -> list:
+        """
+        DFS implementation using adjacency matrix
+
+        Args:
+            source (int): starting node of the graph
+            visited (list): boolean list for visited nodes
+
+        Returns:
+            list: dfs sequence
+        """
+        self.dfs_list.append(source)
+        visited[source] = True
+        row = self.matrix[source]
+        for node in range(len(row)):
+            if (visited[node] == False and self.matrix[source][node] != 0):
                 self.dfs(node, visited)
+        return self.dfs_list
+    
+    def bfs(self, source:int, visited:list) -> list:
+        """
+        BFS implementation using adjacency matrix
 
-    def bfs(self, start:int, visited:list[bool]):
+        Args:
+            source (int): starting node of the graph
+            visited (list): boolean list for visited nodes
+
+        Returns:
+            list: bfs sequence 
+        """
         queue = Queue()
-        queue.put(start)
+        queue.put(source)
+        visited[source] = True
         while (queue.empty() != True):
-            node = queue.get()
-            if (visited[node] != True):
-                visited[node] = True
-                print(node, end=' ')
-            for neighbour in range(len(self.graph[node])):
-                if (visited[neighbour] != True and self.graph[node][neighbour] != 0 and self.graph[node][neighbour] != -1):
-                    queue.put(neighbour)
-        
-
+            curr = queue.get()
+            self.bfs_list.append(curr)
+            row = self.matrix[curr]
+            for node in range(len(row)):
+                if (visited[node] == False and self.matrix[curr][node] != 0):
+                    queue.put(node)
+                    visited[node] = True
+        return self.bfs_list
+    
+    def to_file(self, filename:str, language:str = "py") -> bool:
+        f = open(filename, 'w')
+        code = """from queue import Queue
+        class Graph:
+            n = None
+            matrix = []
+            dfs_list = []
+            bfs_list = []
+            def __init__(self, matrix:list, verbose:bool=False, n:int=0) -> None:
+                if verbose:
+                    for i in range(n):
+                        row = []
+                        for j in range(n):
+                            connection = int(input("Enter 0 if no connection between " + str(i) + " and " + str(j) + " else enter 1: "))
+                            row.append(connection)
+                        self.matrix.append(row)
+                else:
+                    self.matrix = matrix
+            def printGraph(self) -> None:
+                for row in self.matrix:
+                    print(row)
+            
+            def dfs(self, source:int, visited:list) -> list:
+                self.dfs_list.append(source)
+                visited[source] = True
+                row = self.matrix[source]
+                for node in range(len(row)):
+                    if (visited[node] == False and self.matrix[source][node] != 0):
+                        self.dfs(node, visited)
+                return self.dfs_list
+            
+            def bfs(self, source:int, visited:list) -> list:
+                queue = Queue()
+                queue.put(source)
+                visited[source] = True
+                while (queue.empty() != True):
+                    curr = queue.get()
+                    self.bfs_list.append(curr)
+                    row = self.matrix[curr]
+                    for node in range(len(row)):
+                        if (visited[node] == False and self.matrix[curr][node] != 0):
+                            queue.put(node)
+                            visited[node] = True
+                return self.bfs_list
+        """
+        f.write(code)
+        f.close()
+        return True
+            
 if __name__ == "__main__":
-    n = int(input("Enter the number of nodes in the graph: "))
-    obj = Graph(n)
-    visited = []
-    for i in range(n):
-        visited.append(False)
-    choice = int(input("Enter 0 for DFS and 1 for BFS: "))
-    if (choice == 0):
-        print("DFS sequence is: ")
-        obj.dfs(0, visited)
-    elif (choice == 1):
-        print("BFS sequence is: ")
-        obj.bfs(0, visited)
+    matrix = [  [0, 1, 1, 0],
+                [1, 0, 0, 1],
+                [1, 0, 0, 1],
+                [1, 1, 1, 0]]
+    obj = Graph(matrix)
+    obj.printGraph()
+    visited = [False] * 4
+    print(obj.dfs(0, visited))
+    visited = [False] * 4
+    print(obj.bfs(0, visited))
+    obj.to_file("code.py")
