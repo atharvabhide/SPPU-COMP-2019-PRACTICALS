@@ -26,31 +26,31 @@ knowledge_base = {
         "ENTC Engineering"
     ],
 
-    "what are the top branch cut-offs for COEP?" : [
+    "what are the top branch cut-offs for coep?" : [
         "Computer Engineering : 99.8 percentile",
         "Does not have IT branch",
         "ENTC Engineering: 99.2 percentile",
     ],   
 
-    "what are the top branch cut-offs for PICT?" : [
+    "what are the top branch cut-offs for pict?" : [
         "Computer Engineering : 99.4 percentile",
         "IT Engineering : 98.6 percentile",
         "ENTC Engineering: 97.2 percentile",
     ],  
 
-    "what are the top branch cut-offs for VIT?" : [
+    "what are the top branch cut-offs for vit?" : [
         "Computer Engineering : 99.8 percentile",
         "IT Engineering: 97.1 percentile",
         "ENTC Engineering: 96.2 percentile",
     ],    
 
-    "what are the top branch cut-offs for CUMMINS?" : [
+    "what are the top branch cut-offs for cummins?" : [
         "Computer Engineering : 99.8 percentile",
         "Does not have IT branch",
         "ENTC Engineering: 99.2",
     ],  
 
-    "what are the top branch cut-offs for PCCOE?" : [
+    "what are the top branch cut-offs for pccoe?" : [
         "Computer Engineering : 99.8 percentile",
         "Does not have IT branch",
         "ENTC Engineering: 99.2",
@@ -66,12 +66,14 @@ st.header("College Enquiry Rule Based Chatbot")
 
 def respond(input: str):
     if (input in knowledge_base):
+        print(input)
         values = knowledge_base[input]
         for value in values:
             st.write(value)
     else:
+        print(input)
         key = input
-        st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below")
+        st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below-")
         answer = st.text_input("Answer")
         add = st.button("Add answer")
         if (add):
