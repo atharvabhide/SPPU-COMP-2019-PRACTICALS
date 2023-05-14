@@ -1,53 +1,39 @@
-def issafe(arr,x,y,n):
-    for row in range(x):
-        if arr[row][y] ==1:
-            # Checking column attack
-            return False
-    row = x
-    col = y
-    #Checking Diagonal Attack
-    while row>=0 and col>=0:
-        if arr[row][col]==1:
-            return False
-        row-=1
-        col-=1
+def solveNQueens(n : int):
+    col = set()
+    posDiag = set() # determined by r+c
+    negDiag = set() # determined by r-c
 
-    row = x
-    col = y
-    #Checking Anti Diagonal Attack
-    while row>=0 and col<n:
-        if arr[row][col]==1:
-            return False
-        row-=1
-        col+=1
+    res = []
+    board = [['.' for _ in range(n)] for _ in range(n)]
 
-    return True
+    def backtrack(r):
+        if (r == n):
+            res.append([''.join(row) for row in board])
+            return
+        for c in range(n):
+            if (c in col or r+c in posDiag or r-c in negDiag):
+                continue
+            col.add(c)
+            posDiag.add(r + c)
+            negDiag.add(r - c)
+            board[r][c] = 'Q'
+            backtrack(r + 1)
+            col.remove(c)
+            posDiag.remove(r + c)
+            negDiag.remove(r - c)
+            board[r][c] = '.'
+    backtrack(0)
+    return res
 
-def nQueen(arr,x,n):
-    if x>=n:
-        return True
-
-    for col in range(n):
-        if issafe(arr,x,col,n):
-            arr[x][col]=1
-            if nQueen(arr,x+1,n):
-                return True
-            arr[x][col] = 0
-
-    return False
-
-
-
-
-def main():
-    n = int(input("Enter number of Queens : "))
-    arr = [[0]*n for i in range(n)]
-
-    if nQueen(arr,0,n):
-        for i in range(n):
-            for j in range(n):
-                print(arr[i][j],end=" ")
+def printSolutions(boards):
+    for board in enumerate(boards):
+        print(f"Solution: {board[0]+1}")
+        for row in board[1]:
+            for col in row:
+                print(col, end=' ')
             print()
+        print()
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    boards = solveNQueens(8)
+    printSolutions(boards)
