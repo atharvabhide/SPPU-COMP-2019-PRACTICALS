@@ -1,140 +1,113 @@
-g=0
-def print_board(elements):
-    for i in range(9):
-        if i%3 == 0:
-            print()
-        if elements[i]==-1:
-            print("_", end = " ")
+class Node:
+    def __init__(self, data, level, fval):
+        # Initialize the node with the data ,level of the node and the calculated fvalue
+        self.data = data
+        self.level = level
+        self.fval = fval
+
+    def generate_child(self):
+        # Generate child nodes from the given node by moving the blank space
+        # either in the four direction {up,down,left,right}
+        x, y = self.find(self.data, '_')
+        # val_list contains position values for moving the blank space in either of
+        # the 4 direction [up,down,left,right] respectively.
+        val_list = [[x, y - 1], [x, y + 1], [x - 1, y], [x + 1, y]]
+        children = []
+        for i in val_list:
+            child = self.shuffle(self.data, x, y, i[0], i[1])
+            if child is not None:
+                child_node = Node(child, self.level + 1, 0)
+                children.append(child_node)
+        return children
+
+    def shuffle(self, puz, x1, y1, x2, y2):
+        # Move the blank space in the given direction and if the position value are out
+        # of limits the return None
+        if x2 >= 0 and x2 < len(self.data) and y2 >= 0 and y2 < len(self.data):
+            temp_puz = []
+            temp_puz = self.copy(puz)
+            temp = temp_puz[x2][y2]
+            temp_puz[x2][y2] = temp_puz[x1][y1]
+            temp_puz[x1][y1] = temp
+            return temp_puz
         else:
-            print(elements[i], end = " ")
-    print()
+            return None
 
-def solvable(start):
-    inv=0
+    def copy(self, root):
+        # copy function to create a similar matrix of the given node
+        temp = []
+        for i in root:
+            t = []
+            for j in i:
+                t.append(j)
+            temp.append(t)
+        return temp
 
-    for i in range(9):
-        if start[i] <= 1:
-            continue
-        for j in range(i+1,9):
-            if start[j]==-1:
-                continue
-            if start[i]>start[j]:
-                inv+=1
-    if inv%2==0:
-        return True
-    return False
-
-def heuristic(start,goal):
-    global g
-    h = 0
-    for i in range(9):
-        for j in range(9):
-            if start[i] == goal[j] and start[i] != -1:
-                h += (abs(j-i))//3 + (abs(j-i))%3
-    return h + g
-
-def moveleft(start,position):
-    start[position],start[position-1]= start[position-1],start[position]
-
-def moveright(start,position):
-    start[position],start[position+1]= start[position+1],start[position]
-
-def moveup(start,position):
-    start[position],start[position-3]= start[position-3],start[position]
-
-def movedown(start,position):
-    start[position],start[position+3]= start[position+3],start[position]
+    def find(self, puz, x):
+        # Specifically used to find the position of the blank space
+        for i in range(0, len(self.data)):
+            for j in range(0, len(self.data)):
+                if puz[i][j] == x:
+                    return i, j
 
 
-def movetile(start,goal):
-    emptyat= start.index(-1)
-    row = emptyat//3
-    col = emptyat%3
-    t1,t2,t3,t4 = start[:],start[:],start[:],start[:]
-    f1,f2,f3,f4 = 100,100,100,100
+class Puzzle:
+    def __init__(self, size):
+        # Initialize the puzzle size by the the specified size,open and closed lists to empty
+        self.n = size
+        self.open = []
+        self.closed = []
 
-    if col -1 >=0:
-        moveleft(t1, emptyat)
-        f1 = heuristic(t1, goal)
-    if col+1<3:
-        moveright(t2, emptyat)
-        f2 = heuristic(t2, goal)
-    if row + 1 <3:
-        movedown(t3, emptyat)
-        f3 = heuristic(t3, goal)
-    if row-1>=0:
-        moveup(t4, emptyat)
-        f4 = heuristic(t4, goal)
+    def accept(self):
+        # Accepts the puzzle from the user
+        puz = []
+        for i in range(0, self.n):
+            temp = input().split(" ")
+            puz.append(temp)
+        return puz
 
-    min_heuristic = min(f1, f2,f3,f4)
+    def f(self, start, goal):
+        # Heuristic function to calculate Heuristic value f(x) = h(x) + g(x)
+        return self.h(start.data, goal) + start.level
 
-    if f1==min_heuristic:
-        moveleft(start, emptyat)
-    elif f2==min_heuristic:
-        moveright(start, emptyat)
-    elif f3==min_heuristic:
-        movedown(start, emptyat)
-    elif f4 == min_heuristic:
-        moveup(start, emptyat)
-        
-        
-def solveEight(start,goal):
-    global g
-    g+=1
-    movetile(start,goal)
-    print_board(start)
-    f = heuristic(start,goal)
-    if f == g:
-        print("Solved in {} moves".format(f))
-        return
+    def h(self, start, goal):
+        # Calculates the difference between the given puzzles
+        temp = 0
+        for i in range(0, self.n):
+            for j in range(0, self.n):
+                if start[i][j] != goal[i][j] and start[i][j] != '_':
+                    temp += 1
+        return temp
 
-    solveEight(start,goal)
-
-
-def main():
-    global g
-    start = list()
-    goal = list()
-    print("Enter the start state:(Enter -1 for empty):")
-    for i in range(9):
-        start.append(int(input()))
-
-    print("Enter the goal state:(Enter -1 for empty):")
-    for i in range(9):
-        goal.append(int(input()))
-
-    print_board(start)
-
-    if solvable(start):
-        solveEight(start,goal)
-        print("Solved in {} moves".format(g))
-    else:
-        print("Not possible to solve")
+    def process(self):
+        # Accept Start and Goal Puzzle state
+        print("enter the start state matrix \n")
+        start = self.accept()
+        print("enter the goal state matrix \n")
+        goal = self.accept()
+        start = Node(start, 0, 0)
+        start.fval = self.f(start, goal)
+        # put the start node in the open list
+        self.open.append(start)
+        print("\n\n")
+        while True:
+            cur = self.open[0]
+            print("==================================================\n")
+            for i in cur.data:
+                for j in i:
+                    print(j, end=" ")
+                print("")
+            # if the difference between current and goal node is 0 we have reached the goal node
+            if (self.h(cur.data, goal) == 0):
+                break
+            for i in cur.generate_child():
+                i.fval = self.f(i, goal)
+                self.open.append(i)
+            self.closed.append(cur)
+            del self.open[0]
+            # sort the open list based on f value
+            self.open.sort(key=lambda x: x.fval, reverse=False)
 
 
-if __name__ == '__main__':
-    main()
-
-
-
-# Test Cases
-# 
-# 1
-# 2
-# 3
-# -1
-# 4 
-# 6
-# 7 
-# 5 
-# 8 
-
-# 1 
-# 2 
-# 3 
-# 4 
-# 5 
-# 6 
-# 7 
-# 8
-# -1
+puz = Puzzle(3)
+puz.process()
