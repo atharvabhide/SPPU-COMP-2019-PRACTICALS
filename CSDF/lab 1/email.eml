@@ -1,0 +1,1424 @@
+Delivered-To: atharvabhide91@gmail.com
+Received: by 2002:a98:b053:0:b0:1d8:421d:b750 with SMTP id i19csp96755eij;
+        Wed, 9 Aug 2023 11:08:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfGR+rIAzT7fj8m9rU+ufO1txFmXC/005tTN4n+qypnBVCwbWh16J8VKMlhKTzbE7OP6ky
+X-Received: by 2002:a17:90b:152:b0:267:75ce:f6d9 with SMTP id em18-20020a17090b015200b0026775cef6d9mr59993pjb.3.1691604535528;
+        Wed, 09 Aug 2023 11:08:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1691604535; cv=none;
+        d=google.com; s=arc-20160816;
+        b=yYzZFxenrpxQjNp5e7Xq5NU9UAkeDcwyITmbGu0tkqTtwgSp5wj4nouM0fxJAvKD8L
+         rp1noZ47XCB+rNCn87LdSqlwn0YBRPOrQ3W3L221O4PJdB77hJpcGyAVGCjScGx+n6+L
+         DZdfkeRuxJY5oCnbDwdvY60tDbZnStEwJjuFB0rGrNUJgy32BQSpLay60ThauqjubgR6
+         oU18iCYZVhoLYXBYUjjq1XEmUov1i47JzQLL9jc0m3N+o9dnXf813+DgAwsO6OX7PZWe
+         P/Yyw+6oW8TyLNWZ55IXCXmt1ICY4IPuJd17UB25Ia89/gtn1J92twOKE3jBXbK+k4U4
+         PjIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:mime-version:to:from:subject:date:message-id
+         :dkim-signature:dkim-signature;
+        bh=NWUHcfeH1QAWUiAuMOngPZc4yXQJtfgdr+KSeKTiMiI=;
+        fh=cLwg0GgJO6ldKvY5pnWs9zdVxgfEm7MPSBmvrbwEqow=;
+        b=jjHE9soqWyQ/2bZvltASn1L+h9sKEqFqiv8CCbR8FO3oL3C0WlD5VuADZx/WfNBBDs
+         CJtECbyM8cnRg/4WTtkYtbnzZe2mZoWLeg10i0pXw6qM4Q8EKsVbaFSOouGd5yXSmWUG
+         +difQndSUMYuvmkKA+qhQ+CpmaefZO6h4bQPBISz47AcQI2WfbMGRALNsyXbaSKdicnh
+         jAdi1fxiHu6V6dExkU2xEAGRmIe7MKEuG2bNPN97jvVDBg3V4nimw97p3haohc3CceOS
+         i7QAD5L0yh/nlelPUBItf7n2IzgotHvGnBc7UR45z4Wm/lDYxQxm54itxTqN1p5U9Sjb
+         QxnQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@unstop.news header.s=m6r7wr6rkaeeb5qtwyxpt7q4ej6ybikp header.b=h5d9jKXO;
+       dkim=pass header.i=@amazonses.com header.s=rlntogby6xsxlfnvyxwnvvhttakdsqto header.b=JxlTN6qd;
+       spf=pass (google.com: domain of 01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@emails.unstop.news designates 76.223.176.211 as permitted sender) smtp.mailfrom=01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@emails.unstop.news;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=unstop.news
+Return-Path: <01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@emails.unstop.news>
+Received: from c176-211.smtp-out.ap-south-1.amazonses.com (c176-211.smtp-out.ap-south-1.amazonses.com. [76.223.176.211])
+        by mx.google.com with ESMTPS id 13-20020a17090a098d00b00268273fffc0si1933772pjo.99.2023.08.09.11.08.54
+        for <atharvabhide91@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 Aug 2023 11:08:55 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@emails.unstop.news designates 76.223.176.211 as permitted sender) client-ip=76.223.176.211;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@unstop.news header.s=m6r7wr6rkaeeb5qtwyxpt7q4ej6ybikp header.b=h5d9jKXO;
+       dkim=pass header.i=@amazonses.com header.s=rlntogby6xsxlfnvyxwnvvhttakdsqto header.b=JxlTN6qd;
+       spf=pass (google.com: domain of 01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@emails.unstop.news designates 76.223.176.211 as permitted sender) smtp.mailfrom=01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@emails.unstop.news;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=unstop.news
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=m6r7wr6rkaeeb5qtwyxpt7q4ej6ybikp; d=unstop.news; t=1691604533;
+	h=Message-ID:Date:Subject:From:To:MIME-Version:Content-Type;
+	bh=h+Uupoq71/LqdOefXB5hkJCwdBFyXWZD0hfJfBWW+9I=;
+	b=h5d9jKXOaW7XyFDdu61xfoJlNrysHBazRzV9fSBbz9SZ84HhAtEZm3W/0LkRpvXw
+	OipBUm1P4yby3n1zgy8J0P6qXhbNWVT7qfV2EeCJ8hxC0A1jakyNSQhc6KDIqbOqSvF
+	+mj7roczIfiDxsS6Qa7c3QGJichl/+jVPtkGyYlGaB5UPRw52ThvwG1HoFSAn4+65Je
+	cQcA/jG6eYyYgnYXCaULbx669NVE3dLV+y+009yNNkKZbn+/bfY0q8Fcn8zesBx4b47
+	IkFA+ChwOaL8Pv10QjTnTDOoReI+bTcPlwHNZpURnxAVbpYKf4acjzt0TR9w6GuNlBC
+	TUfCHZmBzw==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=rlntogby6xsxlfnvyxwnvvhttakdsqto; d=amazonses.com; t=1691604533;
+	h=Message-ID:Date:Subject:From:To:MIME-Version:Content-Type:Feedback-ID;
+	bh=h+Uupoq71/LqdOefXB5hkJCwdBFyXWZD0hfJfBWW+9I=;
+	b=JxlTN6qd2y/HTT7Ra9/BuVeb2MR3lTyvzg6+7y5qlqaHhSeGfXzUoGGGofIxCpR9
+	ThDoRIU2V/Q/SECwcpQ4X5rT3XYlhuayjK0y4aXkdgJ3LutbXkVXX8iz7MDL5ZQPQ4x
+	1HcYzUbQbhXCDujQeUmXcVfMJ7RHm82rwpK0PR7w=
+Message-ID: <01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000@ap-south-1.amazonses.com>
+Date: Wed, 9 Aug 2023 18:08:53 +0000
+Subject: Wow, look at your certificate | Flipkart GRiD 5.0 - Software
+ Development Track
+From: Unstop Events <updates@unstop.news>
+To: atharvabhide91@gmail.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="_=_swift_1691604533_cb900a76d798c113ff786ad971786567_=_"
+Feedback-ID: 1.ap-south-1.vLaUspdbZtz+0zahNQSbWc0bbDg5bpfORXW9fnjVqUQ=:AmazonSES
+X-SES-Outgoing: 2023.08.09-76.223.176.211
+
+--_=_swift_1691604533_cb900a76d798c113ff786ad971786567_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html lang=3D"en">
+
+<head>
+    <meta http-equiv=3D"=
+Content-Type" content=3D"text/html; charset=3Dutf-8" />
+    <meta http-eq=
+uiv=3D"X-UA-Compatible" content=3D"IE=3Dedge" />
+    <title>Certificate E=
+mail</title>
+    <meta name=3D"author" content=3D"" content=3D"" />
+   =
+ <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1=
+.0" />
+    <style type=3D"text/css">
+        @import  url("https://font=
+s.googleapis.com/css?family=3DRoboto:400,500,700&display=3Dswap");
+
+   =
+     body {
+            width: auto;
+            background-color: #F6F=
+8FA;
+            margin: 0 auto;
+            padding: 0;
+            =
+font-size: 14px;
+            -webkit-text-size-adjust: 100% !important;=
+
+            -ms-text-size-adjust: 100% !important;
+            -webkit=
+-font-smoothing: antialiased;
+            font-family: "Roboto", sans-ser=
+if;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+ =
+       h5,
+        h6,
+        p,
+        span,
+        a,
+      =
+  strong,
+        div,
+        td {
+            font-family: "Roboto"=
+, sans-serif;
+        }
+
+        img {
+            border: 0 !impor=
+tant;
+            outline: none !important;
+            display: block;=
+
+        }
+
+        a {
+            text-decoration: none;
+      =
+      color: #0073e6;
+        }
+
+        .h_text_color:hover {
+    =
+        color: #0073e6 !important;
+            text-decoration: underline=
+ !important;
+        }
+        .footer_sect a:hover {
+            opa=
+city: .8;
+        }
+
+        table {
+            border-collapse: c=
+ollapse;
+            mso-table-lspace: 0px;
+            mso-table-rspac=
+e: 0px;
+        }
+
+        @media (max-width: 600px) {
+            =
+.full {
+                width: 100% !important;
+            }
+
+    =
+        .hedr h1 {
+                padding-top: 30px !important;
+      =
+          padding-left: 0 !important;
+                font-size: 24px !im=
+portant;
+                line-height: 28px !important;
+            }
+=
+
+            .hedr .img {
+                width: auto !important;
+   =
+             padding-right: 5px !important;
+            }
+
+          =
+  .hedr .img img {
+                max-width: 150px !important;
+       =
+     }
+
+            .pdng {
+                padding: 20px 15px !impor=
+tant;
+            }
+
+            .footer_sect {
+                dis=
+play: block;
+            }
+
+            .footer_sect .follow {
+    =
+            border-right: 0 !important;
+                padding-right: 0 =
+!important;
+                text-align: center;
+                width: =
+100%;
+                display: block;
+                margin-bottom: 15=
+px;
+            }
+
+            .footer_store {
+                widt=
+h: 100%;
+                text-align: center;
+                display: b=
+lock;
+            }
+
+            .footer_store .coin {
+            =
+    padding-left: 0 !important;
+            }
+
+            .footer_se=
+ct p {
+                font-size: 13px !important;
+                marg=
+in-bottom: 10px !important;
+            }
+
+            .footer_sect i=
+mg {
+                width: 35px !important;
+            }
+
+       =
+     .queries p {
+                font-size: 13px !important;
+         =
+   }
+
+            .queries .copyright {
+                margin-top: 5=
+px !important;
+            }
+
+            .title {
+                =
+font-size: 16px !important;
+                line-height: 22px !important;=
+
+                margin-bottom: 20px !important;
+            }
+
+   =
+         .sub_title {
+                font-size: 14px !important;
+     =
+           line-height: 19px !important;
+                margin-top: 20px=
+ !important;
+            }
+
+            .download_box {
+           =
+     width: 100% !important;
+            }
+
+            .download_box=
+ .list {
+                padding: 0 5px !important;
+            }
+
+=
+            .download_box .list td {
+                padding: 15px 5px 10=
+px !important;
+            }
+            .download_box .list td span {=
+
+                font-size: 18px !important;
+                line-heigh=
+t: 22px !important;
+            }
+        }
+    </style>
+</head>
+=
+
+<body>
+    <div style=3D"background-color: #F6F8FA; width: 100%; margi=
+n: 0; padding: 0;">
+        <table
+            cellpadding=3D"0"
+    =
+        cellspacing=3D"0"
+            align=3D"center"
+            bgco=
+lor=3D"#ffffff"
+            border=3D"0"
+            width=3D"700"
+  =
+          class=3D"full"
+            style=3D"background-color: #1C4980;"=
+
+        >
+            <tbody>
+                <tr class=3D"hedr">
+=
+                    <td class=3D"logo" style=3D"vertical-align: top; paddin=
+g: 15px;">
+                        <a href=3D"https://unstop.com/" target=
+=3D"_blank" style=3D"display: block;">
+                            <img=
+
+                                src=3D"https://d8it4huxumps7.cloudfront.=
+net/uploads/images/unstop/emails/unstop-logo-white.png"
+                 =
+               style=3D"display:block; margin:0; width: 80px;"
+          =
+                  />
+                        </a>
+                     =
+   <h1 style=3D"font-family: 'Roboto', sans-serif; margin: 0; padding-top: =
+100px; padding-left: 30px; color: #fff; font-size: 34px; line-height: 38px;=
+">
+                           Woohoo!
+                           <span =
+style=3D"display: block; margin-top: 15px;">
+                            =
+Time to become
+                            <br>
+                       =
+     a celebrity on
+                            <br>
+                  =
+          social media!
+                           </span>
+            =
+            </h1>
+                    </td>
+                    <td wid=
+th=3D"300" class=3D"img" style=3D"vertical-align: bottom; padding-top: 15px=
+;">
+                        <a href=3D"https://unstop.com/" target=3D"_bl=
+ank" style=3D"display: block;">
+                            <img
+      =
+                          src=3D"https://d8it4huxumps7.cloudfront.net/uploa=
+ds/images/unstop/emails/certificate-email.png"
+                          =
+      alt=3D"Certificate email"
+                                style=3D"=
+max-width: 100%;"
+                            >
+                       =
+ </a>
+                    </td>
+                </tr>
+            </t=
+body>
+        </table>
+
+        <table
+            cellpadding=3D"0=
+"
+            cellspacing=3D"0"
+            align=3D"center"
+        =
+    bgcolor=3D"#ffffff"
+            border=3D"0"
+            width=3D"7=
+00"
+            class=3D"full"
+        >
+            <tbody>
+      =
+          <tr>
+                    <td class=3D"pdng" style=3D"padding: 3=
+0px 50px; text-align: center;">
+                        <p class=3D"title=
+" style=3D"font-family: 'Roboto', sans-serif; text-align: center; font-size=
+: 18px; line-height: 24px; color: #434343; font-weight: 400; margin: 0 0 30=
+px;">
+                            Congratulations, here is your certifica=
+te for
+                            <strong style=3D"display: block; font-=
+weight: 700;">
+                                Flipkart GRiD 5.0 - Softwa=
+re Development Track
+                            </strong>
+            =
+            </p>
+
+                        <table
+                    =
+        cellpadding=3D"0"
+                            cellspacing=3D"0"=
+
+                            align=3D"center"
+                         =
+   border=3D"0"
+                            style=3D"width: 240px;"
+   =
+                         class=3D"download_box"
+                        >=
+
+                            <tbody>
+                                <t=
+r>
+                                    <td class=3D"list" style=3D"paddin=
+g: 0 15px;">
+                                        <table
+           =
+                                 cellpadding=3D"0"
+                      =
+                      cellspacing=3D"0"
+                                 =
+           align=3D"center"
+                                            b=
+order=3D"0"
+                                            style=3D"width: 1=
+00%;"
+                                        >
+                       =
+                     <tbody>
+                                            =
+    <tr>
+                                                    <td style=3D=
+"padding: 30px 20px 20px; background-color: #dfefff; border-radius: 12px;">=
+
+                                                        <span style=3D"f=
+ont-family: 'Roboto', sans-serif; margin: 0 0 15px; color: #1c4980; font-si=
+ze: 20px; font-weight: 700; display: block; line-height: 24px;">
+        =
+                                                    Certificate of
+      =
+                                                      <br>
+              =
+                                              Participation
+             =
+                                           </span>
+                      =
+                                  <a href=3D"https://unstop.com/certificate=
+-preview/eecc2927-49a0-4393-97df-4c1efacc9aea" style=3D"display: block; tex=
+t-align: center;">
+                                                      =
+      <img
+                                                              =
+  src=3D"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/=
+download-button.png"
+                                                    =
+            alt=3D"download"
+                                            =
+                    style=3D"display: block; margin: auto; width: 130px; ma=
+x-width: 100%;"
+                                                         =
+   >
+                                                        </a>
+     =
+                                               </td>
+                    =
+                            </tr>
+                                       =
+     </tbody>
+                                        </table>
+        =
+                            </td>
+                                </tr>=
+
+                            </tbody>
+                        </table>=
+
+
+                        <p class=3D"sub_title" style=3D"font-family: =
+'Roboto', sans-serif; margin: 30px 0 0; text-align: center; font-size: 16px=
+; color: #434343; font-weight: 500;">
+                            Share t=
+hem on social media & show the world your spirit of competitiveness that is=
+ going to reap you amazing rewards.
+                        </p>
+
+   =
+                     <div style=3D"text-align: center; margin-top: 15px;">=
+
+                            <a
+                                href=3D=
+"https://api.whatsapp.com/send?text=3DFlipkart GRiD 5.0 - Software Developm=
+ent Track - https://unstop.com/o/FCarWmf"
+                               =
+ style=3D"display: inline-block; text-decoration: none; margin-right: 20px;=
+"
+                                target=3D"_blank"
+                   =
+         >
+                                <img
+                       =
+             src=3D"https://d8it4huxumps7.cloudfront.net/uploads/images/uns=
+top/emails/whatsapp-icons.png"
+                                    alt=3D=
+"Whatsapp Icon"
+                                    style=3D"width: 40px;=
+"
+                                >
+                            </a>
+=
+
+                            <a
+                                href=3D=
+"http://linkedin.com/shareArticle?mini=3Dtrue&url=3Dhttps://unstop.com/o/FC=
+arWmf&shareTitle=3DFlipkart GRiD 5.0 - Software Development Track"
+      =
+                          style=3D"display: inline-block; text-decoration: =
+none; margin-right: 20px;"
+                                target=3D"_bla=
+nk"
+                            >
+                                <img=
+
+                                    src=3D"https://d8it4huxumps7.cloudfr=
+ont.net/uploads/images/unstop/emails/linkedin-icon.png"
+                 =
+                   alt=3D"Linkedin Icon"
+                                =
+    style=3D"width: 40px;"
+                                >
+          =
+                  </a>
+
+                            <a
+              =
+                  href=3D"https://www.facebook.com/sharer/sharer.php?app_id=
+=3D136377486571908&sdk=3Djoey&u=3Dhttps://unstop.com/o/FCarWmf"
+         =
+                       style=3D"display: inline-block; text-decoration: non=
+e; margin-right: 20px;"
+                                target=3D"_blank"=
+
+                            >
+                                <img
+ =
+                                   src=3D"https://d8it4huxumps7.cloudfront.=
+net/uploads/images/unstop/emails/facebook-icons.png"
+                    =
+                alt=3D"Facebook Icon"
+                                   =
+ style=3D"width: 40px;"
+                                >
+             =
+               </a>
+
+                            <a
+                 =
+               href=3D"http://twitter.com/intent/tweet?text=3DFlipkart GRiD=
+ 5.0 - Software Development Track @ &url=3Dhttps://unstop.com/o/FCarWmf"
+=
+                                style=3D"display: inline-block; text-decora=
+tion: none;"
+                                target=3D"_blank"
+        =
+                    >
+                                <img
+            =
+                        src=3D"https://d8it4huxumps7.cloudfront.net/uploads=
+/images/unstop/emails/twitter-icon.png"
+                                 =
+   alt=3D"Twitter Icon"
+                                    style=3D"widt=
+h: 40px;"
+                                >
+                           =
+ </a>
+                        </div>
+
+                    </td>
+   =
+             </tr>
+            </tbody>
+        </table>
+
+        =
+
+        <table
+            cellpadding=3D"0"
+            cellspacing=
+=3D"0"
+            align=3D"center"
+            bgcolor=3D"#dfefff"
+ =
+           border=3D"0"
+            width=3D"700"
+            class=3D"=
+full"
+        >
+            <tbody>
+                <tr>
+          =
+          <td style=3D"padding: 20px 15px;">
+                        <tab=
+le
+                            cellpadding=3D"0"
+                      =
+      cellspacing=3D"0"
+                            align=3D"center"
+  =
+                          bgcolor=3D"#dfefff"
+                           =
+ border=3D"0"
+                            style=3D"width: 100%;"
+      =
+                  >
+                            <tbody>
+               =
+                 <tr class=3D"footer_sect">
+                             =
+       <td class=3D"follow" style=3D"border-right: 2px solid #434343; paddi=
+ng-right: 15px; text-align: center;">
+                                   =
+     <p style=3D"font-family: 'Roboto', sans-serif; text-align: center; col=
+or: #434343; font-size: 14px; font-weight: 500; margin: 0 0 15px;">
+     =
+                                       Follow us for informative & cute con=
+tent:
+                                        </p>
+                    =
+                    <div style=3D"text-align: center;">
+                 =
+                           <a
+                                           =
+     href=3D"https://www.instagram.com/unstop.world/"
+                   =
+                             style=3D"display: inline-block; text-decoratio=
+n: none; margin-right: 12px;"
+                                           =
+     target=3D"_blank"
+                                            >
+  =
+                                              <img
+                      =
+                              src=3D"https://d8it4huxumps7.cloudfront.net/u=
+ploads/images/unstop/emails/instagram-icon.png"
+                         =
+                           alt=3D"Instagram Icon"
+                       =
+                             style=3D"width: 40px;"
+                     =
+                           >
+                                            =
+</a>
+
+                                            <a
+                =
+                                href=3D"https://www.linkedin.com/company/un=
+stop/"
+                                                style=3D"display: =
+inline-block; text-decoration: none; margin-right: 12px;"
+               =
+                                 target=3D"_blank"
+                      =
+                      >
+                                                <=
+img
+                                                    src=3D"https://d8=
+it4huxumps7.cloudfront.net/uploads/images/unstop/emails/linkedin-icon.png"=
+
+                                                    alt=3D"Linkedin Icon=
+"
+                                                    style=3D"width: 40p=
+x;"
+                                                >
+                 =
+                           </a>
+
+                                      =
+      <a
+                                                href=3D"https://=
+t.me/+ON15qceSy-IyZjY9"
+                                                s=
+tyle=3D"display: inline-block; text-decoration: none; margin-right: 12px;"=
+
+                                                target=3D"_blank"
+    =
+                                        >
+                               =
+                 <img
+                                                   =
+ src=3D"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/t=
+elegram-icon.png"
+                                                    alt=
+=3D"Telegram Icon"
+                                                    st=
+yle=3D"width: 40px;"
+                                                >
+=
+                                            </a>
+
+                     =
+                       <a
+                                               =
+ href=3D"https://discord.com/invite/DvYWXNr4yR"
+                         =
+                       style=3D"display: inline-block; text-decoration: non=
+e;"
+                                                target=3D"_blank"
+ =
+                                           >
+                            =
+                    <img
+                                                =
+    src=3D"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/email=
+s/discord-icon.png"
+                                                    a=
+lt=3D"discord Icon"
+                                                    s=
+tyle=3D"width: 40px;"
+                                                >=
+
+                                            </a>
+                     =
+                   </div>
+                                    </td>
+
+=
+                                    <td class=3D"footer_store">
+         =
+                               <table cellpadding=3D"0" cellspacing=3D"0" a=
+lign=3D"center" bgcolor=3D"#dfefff" border=3D"0" style=3D"width: 100%;">
+=
+                                            <tbody>
+                     =
+                           <tr>
+                                         =
+           <td class=3D"coin" style=3D"border-right: 2px solid #434343; pad=
+ding-right: 15px; padding-left: 15px; text-align: center;">
+             =
+                                           <p style=3D"font-family: 'Roboto=
+', sans-serif; text-align: center; color: #434343; font-size: 14px; font-we=
+ight: 500; margin: 0 0 15px;">
+                                          =
+                  Unstop Coin Store
+                                     =
+                   </p>
+                                                 =
+       <div style=3D"text-align: center;">
+                              =
+                              <a
+                                        =
+                        href=3D"https://unstop.com/coupons"
+             =
+                                                   style=3D"display: inline=
+-block; text-decoration: none;"
+                                         =
+                       target=3D"_blank"
+                                =
+                            >
+                                           =
+                     <img
+                                               =
+                     src=3D"https://d8it4huxumps7.cloudfront.net/uploads/im=
+ages/unstop/emails/unstop-coin.png"
+                                     =
+                               alt=3D"Unstop Coin"
+                      =
+                                              style=3D"width: 40px;"
+    =
+                                                            >
+           =
+                                                 </a>
+                   =
+                                     </div>
+                             =
+                       </td>
+
+                                         =
+           <td style=3D"padding-left: 15px; text-align: center;">
+       =
+                                                 <p style=3D"font-family: '=
+Roboto', sans-serif; text-align: center; color: #434343; font-size: 14px; f=
+ont-weight: 500; margin: 0 0 15px;">
+                                    =
+                        Proud parent of our app:
+                        =
+                                </p>
+                                    =
+                    <div style=3D"text-align: center;">
+                 =
+                                           <a
+                           =
+                                     href=3D"https://play.google.com/store/=
+apps/details?id=3Dcom.dare2compete.app"
+                                 =
+                               style=3D"display: inline-block; text-decorat=
+ion: none; margin-right: 12px;"
+                                         =
+                       target=3D"_blank"
+                                =
+                            >
+                                           =
+                     <img
+                                               =
+                     src=3D"https://d8it4huxumps7.cloudfront.net/uploads/im=
+ages/unstop/emails/play-store-icon.png"
+                                 =
+                                   alt=3D"Play Store Icon"
+              =
+                                                      style=3D"width: 40px;=
+"
+                                                                >
+   =
+                                                         </a>
+
+        =
+                                                    <a
+                  =
+                                              href=3D"https://apps.apple.co=
+m/in/app/dare2compete/id1601170365"
+                                     =
+                           style=3D"display: inline-block; text-decoration:=
+ none;"
+                                                                t=
+arget=3D"_blank"
+                                                        =
+    >
+                                                                <im=
+g
+                                                                    src=
+=3D"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/app-s=
+tore-iocn.png"
+                                                          =
+          alt=3D"App Store Icon"
+                                        =
+                            style=3D"width: 40px;"
+                      =
+                                          >
+                             =
+                               </a>
+                                     =
+                   </div>
+                                               =
+     </td>
+                                                </tr>
+      =
+                                      </tbody>
+                          =
+              </table>
+                                    </td>
+      =
+                          </tr>
+                            </tbody>
+  =
+                      </table>
+                    </td>
+              =
+  </tr>
+
+                <tr>
+                    <td class=3D"querie=
+s" style=3D"text-align: center; padding: 0 15px 20px;">
+                 =
+       <p style=3D"font-family: 'Roboto', sans-serif; text-align: center; c=
+olor: #434343; font-size: 14px; font-weight: 500; margin: 0;">
+          =
+                  Queries? We're just one email away: <a href=3D"mailto:sup=
+port@unstop.com" class=3D"h_text_color" style=3D"font-family: 'Roboto', san=
+s-serif; color: #434343; text-decoration: none;">support@unstop.com</a>
+ =
+                       </p>
+                        <p class=3D"copyright=
+" style=3D"font-family: 'Roboto', sans-serif; text-align: center; color: #4=
+34343; font-size: 14px; font-weight: 500; margin: 0;">
+                  =
+          =C2=A9 2023 <a class=3D"h_text_color" href=3D"https://unstop.com/=
+" style=3D"font-family: 'Roboto', sans-serif; color: #434343; text-decorati=
+on: none;">Unstop</a>. All rights reserved
+                        </p>=
+
+                    </td>
+                </tr>
+            </tbody>=
+
+        </table>
+    </div>
+</body>
+
+</html>
+
+
+
+--_=_swift_1691604533_cb900a76d798c113ff786ad971786567_=_
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html lang=3D"en">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<title>Certificate Email</title>
+<meta name=3D"author" content=3D"">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+<style type=3D"text/css">
+        @import  url("https://fonts.googleapis.com/css?family=3DRoboto:400,=
+500,700&display=3Dswap");
+
+        body {
+            width: auto;
+            background-color: #F6F8FA;
+            margin: 0 auto;
+            padding: 0;
+            font-size: 14px;
+            -webkit-text-size-adjust: 100% !important;
+            -ms-text-size-adjust: 100% !important;
+            -webkit-font-smoothing: antialiased;
+            font-family: "Roboto", sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span,
+        a,
+        strong,
+        div,
+        td {
+            font-family: "Roboto", sans-serif;
+        }
+
+        img {
+            border: 0 !important;
+            outline: none !important;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0073e6;
+        }
+
+        .h_text_color:hover {
+            color: #0073e6 !important;
+            text-decoration: underline !important;
+        }
+        .footer_sect a:hover {
+            opacity: .8;
+        }
+
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0px;
+            mso-table-rspace: 0px;
+        }
+
+        @media (max-width: 600px) {
+            .full {
+                width: 100% !important;
+            }
+
+            .hedr h1 {
+                padding-top: 30px !important;
+                padding-left: 0 !important;
+                font-size: 24px !important;
+                line-height: 28px !important;
+            }
+
+            .hedr .img {
+                width: auto !important;
+                padding-right: 5px !important;
+            }
+
+            .hedr .img img {
+                max-width: 150px !important;
+            }
+
+            .pdng {
+                padding: 20px 15px !important;
+            }
+
+            .footer_sect {
+                display: block;
+            }
+
+            .footer_sect .follow {
+                border-right: 0 !important;
+                padding-right: 0 !important;
+                text-align: center;
+                width: 100%;
+                display: block;
+                margin-bottom: 15px;
+            }
+
+            .footer_store {
+                width: 100%;
+                text-align: center;
+                display: block;
+            }
+
+            .footer_store .coin {
+                padding-left: 0 !important;
+            }
+
+            .footer_sect p {
+                font-size: 13px !important;
+                margin-bottom: 10px !important;
+            }
+
+            .footer_sect img {
+                width: 35px !important;
+            }
+
+            .queries p {
+                font-size: 13px !important;
+            }
+
+            .queries .copyright {
+                margin-top: 5px !important;
+            }
+
+            .title {
+                font-size: 16px !important;
+                line-height: 22px !important;
+                margin-bottom: 20px !important;
+            }
+
+            .sub_title {
+                font-size: 14px !important;
+                line-height: 19px !important;
+                margin-top: 20px !important;
+            }
+
+            .download_box {
+                width: 100% !important;
+            }
+
+            .download_box .list {
+                padding: 0 5px !important;
+            }
+
+            .download_box .list td {
+                padding: 15px 5px 10px !important;
+            }
+            .download_box .list td span {
+                font-size: 18px !important;
+                line-height: 22px !important;
+            }
+        }
+    </style>
+</head>
+<body style=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: bord=
+er-box; color: #74787E; height: 100%; line-height: 1.4; margin: 0; width: 1=
+00% !important; -webkit-text-size-adjust: none;">
+    <div style=3D"box-sizing: border-box; font-family: 'Roboto', sans-serif=
+; background-color: #F6F8FA; width: 100%; margin: 0; padding: 0;">
+        <table cellpadding=3D"0" cellspacing=3D"0" align=3D"center" bgcolor=
+=3D"#ffffff" border=3D"0" width=3D"700" class=3D"full" style=3D"font-family=
+: Avenir, Helvetica, sans-serif; box-sizing: border-box; border-collapse: c=
+ollapse; mso-table-lspace: 0px; mso-table-rspace: 0px; background-color: #1=
+C4980;"><tbody style=3D"font-family: Avenir, Helvetica, sans-serif; box-siz=
+ing: border-box;"><tr class=3D"hedr">
+<td class=3D"logo" style=3D"box-sizing: border-box; font-family: 'Roboto', =
+sans-serif; vertical-align: top; padding: 15px;">
+                        <a href=3D"https://fg7syt3j.r.ap-south-1.awstrack.m=
+e/L0/https:%2F%2Funstop.com%2F/1/01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2=
+f64afdb1946-000000/4ofM2IBgx3Cy86YcQcYof-YIUmE=3D115" target=3D"_blank" sty=
+le=3D"box-sizing: border-box; font-family: 'Roboto', sans-serif; text-decor=
+ation: none; color: #3869D4; display: block;">
+                            <img src=3D"https://d8it4huxumps7.cloudfront.ne=
+t/uploads/images/unstop/emails/unstop-logo-white.png" style=3D"font-family:=
+ Avenir, Helvetica, sans-serif; box-sizing: border-box; border: 0 !importan=
+t; outline: none !important; max-width: 100%; display: block; margin: 0; wi=
+dth: 80px;"></a>
+                        <h1 style=3D"box-sizing: border-box; font-weight: b=
+old; margin-top: 0; text-align: left; font-family: 'Roboto', sans-serif; ma=
+rgin: 0; padding-top: 100px; padding-left: 30px; color: #fff; font-size: 34=
+px; line-height: 38px;">
+                           Woohoo!
+                           <span style=3D"box-sizing: border-box; font-fami=
+ly: 'Roboto', sans-serif; display: block; margin-top: 15px;">
+                            Time to become
+                            <br>
+                            a celebrity on
+                            <br>
+                            social media!
+                           </span>
+                        </h1>
+                    </td>
+                    <td width=3D"300" class=3D"img" style=3D"box-sizing: bo=
+rder-box; font-family: 'Roboto', sans-serif; vertical-align: bottom; paddin=
+g-top: 15px;">
+                        <a href=3D"https://fg7syt3j.r.ap-south-1.awstrack.m=
+e/L0/https:%2F%2Funstop.com%2F/2/01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2=
+f64afdb1946-000000/hSe6tLIdCrn13bHrIHb_S8PK5YQ=3D115" target=3D"_blank" sty=
+le=3D"box-sizing: border-box; font-family: 'Roboto', sans-serif; text-decor=
+ation: none; color: #3869D4; display: block;">
+                            <img src=3D"https://d8it4huxumps7.cloudfront.ne=
+t/uploads/images/unstop/emails/certificate-email.png" alt=3D"Certificate em=
+ail" style=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: borde=
+r-box; border: 0 !important; outline: none !important; display: block; max-=
+width: 100%;"></a>
+                    </td>
+                </tr></tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" align=3D"center" bgcolor=3D"#fff=
+fff" border=3D"0" width=3D"700" class=3D"full" style=3D"font-family: Avenir=
+, Helvetica, sans-serif; box-sizing: border-box; border-collapse: collapse;=
+ mso-table-lspace: 0px; mso-table-rspace: 0px;"><tbody style=3D"font-family=
+: Avenir, Helvetica, sans-serif; box-sizing: border-box;"><tr>
+<td class=3D"pdng" style=3D"box-sizing: border-box; font-family: 'Roboto', =
+sans-serif; padding: 30px 50px; text-align: center;">
+                        <p class=3D"title" style=3D"box-sizing: border-box;=
+ margin-top: 0; font-family: 'Roboto', sans-serif; text-align: center; font=
+-size: 18px; line-height: 24px; color: #434343; font-weight: 400; margin: 0=
+ 0 30px;">
+                            Congratulations, here is your certificate for
+                            <strong style=3D"box-sizing: border-box; font-f=
+amily: 'Roboto', sans-serif; display: block; font-weight: 700;">
+                                Flipkart GRiD 5.0 - Software Development Tr=
+ack
+                            </strong>
+                        </p>
+
+                        <table cellpadding=3D"0" cellspacing=3D"0" align=3D=
+"center" border=3D"0" style=3D"font-family: Avenir, Helvetica, sans-serif; =
+box-sizing: border-box; border-collapse: collapse; mso-table-lspace: 0px; m=
+so-table-rspace: 0px; width: 240px;" class=3D"download_box"><tbody style=3D=
+"font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box;"><tr>
+<td class=3D"list" style=3D"box-sizing: border-box; font-family: 'Roboto', =
+sans-serif; padding: 0 15px;">
+                                        <table cellpadding=3D"0" cellspacin=
+g=3D"0" align=3D"center" border=3D"0" style=3D"font-family: Avenir, Helveti=
+ca, sans-serif; box-sizing: border-box; border-collapse: collapse; mso-tabl=
+e-lspace: 0px; mso-table-rspace: 0px; width: 100%;"><tbody style=3D"font-fa=
+mily: Avenir, Helvetica, sans-serif; box-sizing: border-box;"><tr>
+<td style=3D"box-sizing: border-box; font-family: 'Roboto', sans-serif; pad=
+ding: 30px 20px 20px; background-color: #dfefff; border-radius: 12px;">
+                                                        <span style=3D"box-=
+sizing: border-box; font-family: 'Roboto', sans-serif; margin: 0 0 15px; co=
+lor: #1c4980; font-size: 20px; font-weight: 700; display: block; line-heigh=
+t: 24px;">
+                                                            Certificate of
+                                                            <br>
+                                                            Participation
+                                                        </span>
+                                                        <a href=3D"https://=
+fg7syt3j.r.ap-south-1.awstrack.me/L0/https:%2F%2Funstop.com%2Fcertificate-p=
+review%2Feecc2927-49a0-4393-97df-4c1efacc9aea%3Futm_campaign=3Dsite-emails%=
+26utm_medium=3Dd2c-automated%26utm_source=3Dwow-look-at-your-certificate-fl=
+ipkart-grid-50-software-development-track/1/01090189db7cc1a3-7c1874c1-a5f3-=
+4173-878a-2f64afdb1946-000000/UqtFaO4zsYOrYbRicmh4nH-wNMs=3D115" style=3D"b=
+ox-sizing: border-box; font-family: 'Roboto', sans-serif; text-decoration: =
+none; color: #3869D4; display: block; text-align: center;">
+                                                            <img src=3D"htt=
+ps://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/download-but=
+ton.png" alt=3D"download" style=3D"font-family: Avenir, Helvetica, sans-ser=
+if; box-sizing: border-box; border: 0 !important; outline: none !important;=
+ display: block; margin: auto; width: 130px; max-width: 100%;"></a>
+                                                    </td>
+                                                </tr></tbody></table>
+</td>
+                                </tr></tbody></table>
+<p class=3D"sub_title" style=3D"box-sizing: border-box; line-height: 1.5em;=
+ margin-top: 0; font-family: 'Roboto', sans-serif; margin: 30px 0 0; text-a=
+lign: center; font-size: 16px; color: #434343; font-weight: 500;">
+                            Share them on social media &amp; show the world=
+ your spirit of competitiveness that is going to reap you amazing rewards.
+                        </p>
+
+                        <div style=3D"box-sizing: border-box; font-family: =
+'Roboto', sans-serif; text-align: center; margin-top: 15px;">
+                            <a href=3D"https://fg7syt3j.r.ap-south-1.awstra=
+ck.me/L0/https:%2F%2Fapi.whatsapp.com%2Fsend%3Ftext=3DFlipkart%2520GRiD%252=
+05.0%2520-%2520Software%2520Development%2520Track%2520-%2520https:%2F%2Funs=
+top.com%2Fo%2FFCarWmf/1/01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb19=
+46-000000/RXLq3O3Sa_ISL9Wr-tcET-QlmjY=3D115" style=3D"box-sizing: border-bo=
+x; font-family: 'Roboto', sans-serif; color: #3869D4; display: inline-block=
+; text-decoration: none; margin-right: 20px;" target=3D"_blank">
+                                <img src=3D"https://d8it4huxumps7.cloudfron=
+t.net/uploads/images/unstop/emails/whatsapp-icons.png" alt=3D"Whatsapp Icon=
+" style=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: border-b=
+ox; border: 0 !important; outline: none !important; display: block; max-wid=
+th: 100%; width: 40px;"></a>
+
+                            <a href=3D"http://fg7syt3j.r.ap-south-1.awstrac=
+k.me/L0/http:%2F%2Flinkedin.com%2FshareArticle%3Fmini=3Dtrue%26url=3Dhttps:=
+%2F%2Funstop.com%2Fo%2FFCarWmf%26shareTitle=3DFlipkart%2520GRiD%25205.0%252=
+0-%2520Software%2520Development%2520Track%3Futm_campaign=3Dsite-emails%26ut=
+m_medium=3Dd2c-automated%26utm_source=3Dwow-look-at-your-certificate-flipka=
+rt-grid-50-software-development-track/1/01090189db7cc1a3-7c1874c1-a5f3-4173=
+-878a-2f64afdb1946-000000/gpxY9G7yV6hNKhD_NyGsi6kgo98=3D115" style=3D"box-s=
+izing: border-box; font-family: 'Roboto', sans-serif; color: #3869D4; displ=
+ay: inline-block; text-decoration: none; margin-right: 20px;" target=3D"_bl=
+ank">
+                                <img src=3D"https://d8it4huxumps7.cloudfron=
+t.net/uploads/images/unstop/emails/linkedin-icon.png" alt=3D"Linkedin Icon"=
+ style=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: border-bo=
+x; border: 0 !important; outline: none !important; display: block; max-widt=
+h: 100%; width: 40px;"></a>
+
+                            <a href=3D"https://fg7syt3j.r.ap-south-1.awstra=
+ck.me/L0/https:%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php%3Fapp_id=3D1363=
+77486571908%26sdk=3Djoey%26u=3Dhttps:%2F%2Funstop.com%2Fo%2FFCarWmf%3Futm_c=
+ampaign=3Dsite-emails%26utm_medium=3Dd2c-automated%26utm_source=3Dwow-look-=
+at-your-certificate-flipkart-grid-50-software-development-track/1/01090189d=
+b7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/JFVMWkgUuj-HVhZqjW42Zqf=
+icp8=3D115" style=3D"box-sizing: border-box; font-family: 'Roboto', sans-se=
+rif; color: #3869D4; display: inline-block; text-decoration: none; margin-r=
+ight: 20px;" target=3D"_blank">
+                                <img src=3D"https://d8it4huxumps7.cloudfron=
+t.net/uploads/images/unstop/emails/facebook-icons.png" alt=3D"Facebook Icon=
+" style=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: border-b=
+ox; border: 0 !important; outline: none !important; display: block; max-wid=
+th: 100%; width: 40px;"></a>
+
+                            <a href=3D"http://fg7syt3j.r.ap-south-1.awstrac=
+k.me/L0/http:%2F%2Ftwitter.com%2Fintent%2Ftweet%3Ftext=3DFlipkart%2520GRiD%=
+25205.0%2520-%2520Software%2520Development%2520Track%2520@%2520%26url=3Dhtt=
+ps:%2F%2Funstop.com%2Fo%2FFCarWmf%3Futm_campaign=3Dsite-emails%26utm_medium=
+=3Dd2c-automated%26utm_source=3Dwow-look-at-your-certificate-flipkart-grid-=
+50-software-development-track/1/01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f=
+64afdb1946-000000/wa-Jga6yz4N0Zdz0C1KCGYbP5WM=3D115" style=3D"box-sizing: b=
+order-box; font-family: 'Roboto', sans-serif; color: #3869D4; display: inli=
+ne-block; text-decoration: none;" target=3D"_blank">
+                                <img src=3D"https://d8it4huxumps7.cloudfron=
+t.net/uploads/images/unstop/emails/twitter-icon.png" alt=3D"Twitter Icon" s=
+tyle=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box;=
+ border: 0 !important; outline: none !important; display: block; max-width:=
+ 100%; width: 40px;"></a>
+                        </div>
+
+                    </td>
+                </tr></tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" align=3D"center" bgcolor=3D"#dfe=
+fff" border=3D"0" width=3D"700" class=3D"full" style=3D"font-family: Avenir=
+, Helvetica, sans-serif; box-sizing: border-box; border-collapse: collapse;=
+ mso-table-lspace: 0px; mso-table-rspace: 0px;"><tbody style=3D"font-family=
+: Avenir, Helvetica, sans-serif; box-sizing: border-box;">
+<tr>
+<td style=3D"box-sizing: border-box; font-family: 'Roboto', sans-serif; pad=
+ding: 20px 15px;">
+                        <table cellpadding=3D"0" cellspacing=3D"0" align=3D=
+"center" bgcolor=3D"#dfefff" border=3D"0" style=3D"font-family: Avenir, Hel=
+vetica, sans-serif; box-sizing: border-box; border-collapse: collapse; mso-=
+table-lspace: 0px; mso-table-rspace: 0px; width: 100%;"><tbody style=3D"fon=
+t-family: Avenir, Helvetica, sans-serif; box-sizing: border-box;"><tr class=
+=3D"footer_sect">
+<td class=3D"follow" style=3D"box-sizing: border-box; font-family: 'Roboto'=
+, sans-serif; border-right: 2px solid #434343; padding-right: 15px; text-al=
+ign: center;">
+                                        <p style=3D"box-sizing: border-box;=
+ line-height: 1.5em; margin-top: 0; font-family: 'Roboto', sans-serif; text=
+-align: center; color: #434343; font-size: 14px; font-weight: 500; margin: =
+0 0 15px;">
+                                            Follow us for informative &amp;=
+ cute content:
+                                        </p>
+                                        <div style=3D"box-sizing: border-bo=
+x; font-family: 'Roboto', sans-serif; text-align: center;">
+                                            <a href=3D"https://fg7syt3j.r.a=
+p-south-1.awstrack.me/L0/https:%2F%2Fwww.instagram.com%2Funstop.world%2F/1/=
+01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/GUfy--XKukFZvj=
+jnBQQLQ6Su_4s=3D115" style=3D"box-sizing: border-box; font-family: 'Roboto'=
+, sans-serif; color: #3869D4; display: inline-block; text-decoration: none;=
+ margin-right: 12px;" target=3D"_blank">
+                                                <img src=3D"https://d8it4hu=
+xumps7.cloudfront.net/uploads/images/unstop/emails/instagram-icon.png" alt=
+=3D"Instagram Icon" style=3D"font-family: Avenir, Helvetica, sans-serif; bo=
+x-sizing: border-box; border: 0 !important; outline: none !important; displ=
+ay: block; max-width: 100%; width: 40px;"></a>
+
+                                            <a href=3D"https://fg7syt3j.r.a=
+p-south-1.awstrack.me/L0/https:%2F%2Fwww.linkedin.com%2Fcompany%2Funstop%2F=
+/1/01090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/9Xp4bmffvFe=
+YwRAsfPvXz3PBkbw=3D115" style=3D"box-sizing: border-box; font-family: 'Robo=
+to', sans-serif; color: #3869D4; display: inline-block; text-decoration: no=
+ne; margin-right: 12px;" target=3D"_blank">
+                                                <img src=3D"https://d8it4hu=
+xumps7.cloudfront.net/uploads/images/unstop/emails/linkedin-icon.png" alt=
+=3D"Linkedin Icon" style=3D"font-family: Avenir, Helvetica, sans-serif; box=
+-sizing: border-box; border: 0 !important; outline: none !important; displa=
+y: block; max-width: 100%; width: 40px;"></a>
+
+                                            <a href=3D"https://fg7syt3j.r.a=
+p-south-1.awstrack.me/L0/https:%2F%2Ft.me%2F%2BON15qceSy-IyZjY9/1/01090189d=
+b7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/AwMP0o4a-Dcbh9jzm9bjYc_=
+dQug=3D115" style=3D"box-sizing: border-box; font-family: 'Roboto', sans-se=
+rif; color: #3869D4; display: inline-block; text-decoration: none; margin-r=
+ight: 12px;" target=3D"_blank">
+                                                <img src=3D"https://d8it4hu=
+xumps7.cloudfront.net/uploads/images/unstop/emails/telegram-icon.png" alt=
+=3D"Telegram Icon" style=3D"font-family: Avenir, Helvetica, sans-serif; box=
+-sizing: border-box; border: 0 !important; outline: none !important; displa=
+y: block; max-width: 100%; width: 40px;"></a>
+
+                                            <a href=3D"https://fg7syt3j.r.a=
+p-south-1.awstrack.me/L0/https:%2F%2Fdiscord.com%2Finvite%2FDvYWXNr4yR/1/01=
+090189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/1BUH-Y0xrx_G4kPC=
+djjmiVaPwNs=3D115" style=3D"box-sizing: border-box; font-family: 'Roboto', =
+sans-serif; color: #3869D4; display: inline-block; text-decoration: none;" =
+target=3D"_blank">
+                                                <img src=3D"https://d8it4hu=
+xumps7.cloudfront.net/uploads/images/unstop/emails/discord-icon.png" alt=3D=
+"discord Icon" style=3D"font-family: Avenir, Helvetica, sans-serif; box-siz=
+ing: border-box; border: 0 !important; outline: none !important; display: b=
+lock; max-width: 100%; width: 40px;"></a>
+                                        </div>
+                                    </td>
+
+                                    <td class=3D"footer_store" style=3D"box=
+-sizing: border-box; font-family: 'Roboto', sans-serif;">
+                                        <table cellpadding=3D"0" cellspacin=
+g=3D"0" align=3D"center" bgcolor=3D"#dfefff" border=3D"0" style=3D"font-fam=
+ily: Avenir, Helvetica, sans-serif; box-sizing: border-box; border-collapse=
+: collapse; mso-table-lspace: 0px; mso-table-rspace: 0px; width: 100%;"><tb=
+ody style=3D"font-family: Avenir, Helvetica, sans-serif; box-sizing: border=
+-box;"><tr>
+<td class=3D"coin" style=3D"box-sizing: border-box; font-family: 'Roboto', =
+sans-serif; border-right: 2px solid #434343; padding-right: 15px; padding-l=
+eft: 15px; text-align: center;">
+                                                        <p style=3D"box-siz=
+ing: border-box; line-height: 1.5em; margin-top: 0; font-family: 'Roboto', =
+sans-serif; text-align: center; color: #434343; font-size: 14px; font-weigh=
+t: 500; margin: 0 0 15px;">
+                                                            Unstop Coin Sto=
+re
+                                                        </p>
+                                                        <div style=3D"box-s=
+izing: border-box; font-family: 'Roboto', sans-serif; text-align: center;">
+                                                            <a href=3D"http=
+s://fg7syt3j.r.ap-south-1.awstrack.me/L0/https:%2F%2Funstop.com%2Fcoupons%3=
+Futm_campaign=3Dsite-emails%26utm_medium=3Dd2c-automated%26utm_source=3Dwow=
+-look-at-your-certificate-flipkart-grid-50-software-development-track/1/010=
+90189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/W7CZjMsNNHJMMiW3E=
+w9q89Ta9l0=3D115" style=3D"box-sizing: border-box; font-family: 'Roboto', s=
+ans-serif; color: #3869D4; display: inline-block; text-decoration: none;" t=
+arget=3D"_blank">
+                                                                <img src=3D=
+"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/unstop-c=
+oin.png" alt=3D"Unstop Coin" style=3D"font-family: Avenir, Helvetica, sans-=
+serif; box-sizing: border-box; border: 0 !important; outline: none !importa=
+nt; display: block; max-width: 100%; width: 40px;"></a>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style=3D"box-sizing=
+: border-box; font-family: 'Roboto', sans-serif; padding-left: 15px; text-a=
+lign: center;">
+                                                        <p style=3D"box-siz=
+ing: border-box; line-height: 1.5em; margin-top: 0; font-family: 'Roboto', =
+sans-serif; text-align: center; color: #434343; font-size: 14px; font-weigh=
+t: 500; margin: 0 0 15px;">
+                                                            Proud parent of=
+ our app:
+                                                        </p>
+                                                        <div style=3D"box-s=
+izing: border-box; font-family: 'Roboto', sans-serif; text-align: center;">
+                                                            <a href=3D"http=
+s://fg7syt3j.r.ap-south-1.awstrack.me/L0/https:%2F%2Fplay.google.com%2Fstor=
+e%2Fapps%2Fdetails%3Fid=3Dcom.dare2compete.app/1/01090189db7cc1a3-7c1874c1-=
+a5f3-4173-878a-2f64afdb1946-000000/9jJ5_aJY_LUdkS1XRtJbPaA4Seg=3D115" style=
+=3D"box-sizing: border-box; font-family: 'Roboto', sans-serif; color: #3869=
+D4; display: inline-block; text-decoration: none; margin-right: 12px;" targ=
+et=3D"_blank">
+                                                                <img src=3D=
+"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/play-sto=
+re-icon.png" alt=3D"Play Store Icon" style=3D"font-family: Avenir, Helvetic=
+a, sans-serif; box-sizing: border-box; border: 0 !important; outline: none =
+!important; display: block; max-width: 100%; width: 40px;"></a>
+
+                                                            <a href=3D"http=
+s://fg7syt3j.r.ap-south-1.awstrack.me/L0/https:%2F%2Fapps.apple.com%2Fin%2F=
+app%2Fdare2compete%2Fid1601170365/1/01090189db7cc1a3-7c1874c1-a5f3-4173-878=
+a-2f64afdb1946-000000/G3euTNnGoygdIzHdusBh7IC49Kg=3D115" style=3D"box-sizin=
+g: border-box; font-family: 'Roboto', sans-serif; color: #3869D4; display: =
+inline-block; text-decoration: none;" target=3D"_blank">
+                                                                <img src=3D=
+"https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/emails/app-stor=
+e-iocn.png" alt=3D"App Store Icon" style=3D"font-family: Avenir, Helvetica,=
+ sans-serif; box-sizing: border-box; border: 0 !important; outline: none !i=
+mportant; display: block; max-width: 100%; width: 40px;"></a>
+                                                        </div>
+                                                    </td>
+                                                </tr></tbody></table>
+</td>
+                                </tr></tbody></table>
+</td>
+                </tr>
+<tr>
+<td class=3D"queries" style=3D"box-sizing: border-box; font-family: 'Roboto=
+', sans-serif; text-align: center; padding: 0 15px 20px;">
+                        <p style=3D"box-sizing: border-box; line-height: 1.=
+5em; margin-top: 0; font-family: 'Roboto', sans-serif; text-align: center; =
+color: #434343; font-size: 14px; font-weight: 500; margin: 0;">
+                            Queries? We're just one email away: <a href=3D"=
+mailto:support@unstop.com" class=3D"h_text_color" style=3D"box-sizing: bord=
+er-box; font-family: 'Roboto', sans-serif; color: #434343; text-decoration:=
+ none;">support@unstop.com</a>
+                        </p>
+                        <p class=3D"copyright" style=3D"box-sizing: border-=
+box; line-height: 1.5em; margin-top: 0; font-family: 'Roboto', sans-serif; =
+text-align: center; color: #434343; font-size: 14px; font-weight: 500; marg=
+in: 0;">
+                            =C2=A9 2023 <a class=3D"h_text_color" href=3D"h=
+ttps://fg7syt3j.r.ap-south-1.awstrack.me/L0/https:%2F%2Funstop.com%2F/3/010=
+90189db7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/Gsc_6oOPxy1UkdtZ1=
+iW0wHpDdKU=3D115" style=3D"box-sizing: border-box; font-family: 'Roboto', s=
+ans-serif; color: #434343; text-decoration: none;">Unstop</a>. All rights r=
+eserved
+                        </p>
+                    </td>
+                </tr>
+</tbody></table>
+</div>
+<img alt=3D"" src=3D"https://fg7syt3j.r.ap-south-1.awstrack.me/I0/01090189d=
+b7cc1a3-7c1874c1-a5f3-4173-878a-2f64afdb1946-000000/PcNSQuQ4cdYTezhA7Xbdhhf=
+ZOUI=3D115" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>
+
+--_=_swift_1691604533_cb900a76d798c113ff786ad971786567_=_--
