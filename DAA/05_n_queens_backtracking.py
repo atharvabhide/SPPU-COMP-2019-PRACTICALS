@@ -13,28 +13,36 @@ def is_safe(board, row, col, n):
 
     return True
 
-def solve_n_queens_util(board, row, n, solutions):
-    if row == n:
-        solutions.append(["".join(["Q" if col == 1 else "." for col in row]) for row in board])
-        return
-
-    for col in range(n):
-        if is_safe(board, row, col, n):
-            board[row][col] = 1
-            solve_n_queens_util(board, row + 1, n, solutions)
-            board[row][col] = 0
-
-def solve_n_queens(n):
+def solve_n_queens_with_known_first_queen(n, first_queen_row, first_queen_col):
     board = [[0 for _ in range(n)] for _ in range(n)]
-    solutions = []
-    solve_n_queens_util(board, 0, n, solutions)
-    return solutions
 
-if __name__ == "__main__":
-    n = 8
-    solutions = solve_n_queens(n)
-    for i, solution in enumerate(solutions):
-        print(f"Solution {i+1}:")
-        for row in solution:
-            print(row)
-        print()
+    board[first_queen_row][first_queen_col] = 1
+
+    def solve_n_queens_util(row):
+        if row == n:
+            return True
+
+        for col in range(n):
+            if is_safe(board, row, col, n):
+                board[row][col] = 1
+                if solve_n_queens_util(row + 1):
+                    return True
+                board[row][col] = 0
+
+        return False
+
+    if not solve_n_queens_util(first_queen_row + 1):
+        print("No solution exists.")
+    else:
+        for row in board:
+            for col in row:
+                if col == 1:
+                    print('Q', end=' ')
+                else:
+                    print('.', end=' ')
+            print()
+
+n = 8
+first_queen_row = 0  
+first_queen_col = 1 
+solve_n_queens_with_known_first_queen(n, first_queen_row, first_queen_col)
