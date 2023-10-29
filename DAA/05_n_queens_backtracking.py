@@ -1,48 +1,47 @@
-def is_safe(board, row, col, n):
-    for i in range(row):
-        if board[i][col] == 1:
-            return False
+def solveNQueens(n: int, first_queen_col: int):
+    col = set()
+    posDiag = set()  # (r + c)
+    negDiag = set()  # (r - c)
 
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
-        if board[i][j] == 1:
-            return False
+    res = []
+    board = [["."] * n for i in range(n)]
 
-    for i, j in zip(range(row, -1, -1), range(col, n)):
-        if board[i][j] == 1:
-            return False
+    def backtrack(r):
+        if r == n:
+            copy = ["".join(row) for row in board]
+            res.append(copy)
+            return
 
-    return True
+        for c in range(n):
+            if c in col or (r + c) in posDiag or (r - c) in negDiag:
+                continue
 
-def solve_n_queens_with_known_first_queen(n, first_queen_row, first_queen_col):
-    board = [[0 for _ in range(n)] for _ in range(n)]
+            col.add(c)
+            posDiag.add(r + c)
+            negDiag.add(r - c)
+            board[r][c] = "Q"
 
-    board[first_queen_row][first_queen_col] = 1
+            backtrack(r + 1)
 
-    def solve_n_queens_util(row):
-        if row == n:
-            return True
+            col.remove(c)
+            posDiag.remove(r + c)
+            negDiag.remove(r - c)
+            board[r][c] = "."
 
-        for col in range(n):
-            if is_safe(board, row, col, n):
-                board[row][col] = 1
-                if solve_n_queens_util(row + 1):
-                    return True
-                board[row][col] = 0
+    col.add(first_queen_col)
+    posDiag.add(0 + first_queen_col)
+    negDiag.add(0 - first_queen_col)
+    board[0][first_queen_col] = "Q"
 
-        return False
+    backtrack(1)  # Start with the second row
+    return res
 
-    if not solve_n_queens_util(first_queen_row + 1):
-        print("No solution exists.")
-    else:
-        for row in board:
-            for col in row:
-                if col == 1:
-                    print('Q', end=' ')
-                else:
-                    print('.', end=' ')
-            print()
 
-n = 8
-first_queen_row = 0  
-first_queen_col = 1 
-solve_n_queens_with_known_first_queen(n, first_queen_row, first_queen_col)
+if __name__ == "__main__":
+    n = 8
+    first_queen_col = 1
+    board = solveNQueens(n, first_queen_col)[0]
+    for row in board:
+        for col in row:
+            print(col, end=" ")
+        print()
