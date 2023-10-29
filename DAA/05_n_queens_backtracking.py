@@ -1,15 +1,14 @@
 def solveNQueens(n: int, first_queen_col: int):
     col = set()
-    posDiag = set()  # (r + c)
-    negDiag = set()  # (r - c)
+    posDiag = set()
+    negDiag = set()
 
     res = []
-    board = [["."] * n for i in range(n)]
+    board = [["."] * n for _ in range(n)]
 
     def backtrack(r):
         if r == n:
-            copy = ["".join(row) for row in board]
-            res.append(copy)
+            res.append(["".join(row) for row in board])
             return
 
         for c in range(n):
@@ -36,12 +35,9 @@ def solveNQueens(n: int, first_queen_col: int):
     backtrack(1)  # Start with the second row
     return res
 
-
 if __name__ == "__main__":
     n = 8
     first_queen_col = 1
     board = solveNQueens(n, first_queen_col)[0]
     for row in board:
-        for col in row:
-            print(col, end=" ")
-        print()
+        print(" ".join(row))
