@@ -1,73 +1,38 @@
 import heapq
 
-class HuffmanNode:
-    def __init__(self, char, freq):
-        self.char = char
+class node:
+    def __init__(self, freq, symbol, left=None, right=None):
         self.freq = freq
-        self.left = None
-        self.right = None
-
+        self.symbol = symbol
+        self.left = left
+        self.right = right
+        self.huff = ""
+    
     def __lt__(self, other):
         return self.freq < other.freq
-
-def build_huffman_tree(freq_dict):
-    priority_queue = [HuffmanNode(char, freq) for char, freq in freq_dict.items()]
-    heapq.heapify(priority_queue)
     
-    while len(priority_queue) > 1:
-        left = heapq.heappop(priority_queue)
-        right = heapq.heappop(priority_queue)
-        parent = HuffmanNode(None, left.freq + right.freq)
-        parent.left = left
-        parent.right = right
-        heapq.heappush(priority_queue, parent)
-    
-    return priority_queue[0]
+def printNodes(node, val=""):
+    newval = val + node.huff
+    if node.left:
+        printNodes(node.left, newval)
+    if node.right:
+        printNodes(node.right, newval)
+    else:
+        print(f"{node.symbol} -> {newval}")
 
-def build_huffman_codes(root, current_code, result):
-    if root is None:
-        return
+chars = ["a", "b", "c", "d", "e", "f"]
+freqs = [5, 9, 12, 13, 16, 45]
+nodes = []
 
-    if root.char is not None:
-        result[root.char] = current_code
-    build_huffman_codes(root.left, current_code + '0', result)
-    build_huffman_codes(root.right, current_code + '1', result)
+for i in range(len(chars)):
+    heapq.heappush(nodes, node(freqs[i], chars[i]))
 
-def huffman_coding(data):
-    freq_dict = {}
-    for char in data:
-        if char in freq_dict:
-            freq_dict[char] += 1
-        else:
-            freq_dict[char] = 1
+while len(nodes) > 1:
+    left = heapq.heappop(nodes)
+    right = heapq.heappop(nodes)
+    left.huff = "0"
+    right.huff = "1"
+    newnode = node(left.freq + right.freq, left.symbol + right.symbol, left, right)
+    heapq.heappush(nodes, newnode)
 
-    root = build_huffman_tree(freq_dict)
-    huffman_codes = {}
-    build_huffman_codes(root, '', huffman_codes)
-
-    encoded_data = ''.join(huffman_codes[char] for char in data)
-    
-    return encoded_data, root
-
-def huffman_decoding(encoded_data, root):
-    decoded_data = []
-    current = root
-
-    for bit in encoded_data:
-        if bit == '0':
-            current = current.left
-        else:
-            current = current.right
-
-        if current.char is not None:
-            decoded_data.append(current.char)
-            current = root
-
-    return ''.join(decoded_data)
-
-if __name__ == "__main__":
-    data = "atharva bhide daa lab 2"
-    encoded_data, huffman_tree = huffman_coding(data)
-    print("Encoded data:", encoded_data)
-    decoded_data = huffman_decoding(encoded_data, huffman_tree)
-    print("Decoded data:", decoded_data)
+printNodes(nodes[0])
