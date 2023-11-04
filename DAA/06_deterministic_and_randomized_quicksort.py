@@ -28,6 +28,7 @@ if __name__ == "__main__":
     arr_sizes = [100, 1000, 10000, 100000]
     for size in arr_sizes:
         arr = [random.randint(1, 1000) for _ in range(size)]
+        arr.sort(reverse=True)
 
         deterministic_time = timeit.timeit("quick_sort(arr.copy(), 0, len(arr) - 1, deterministic_partition)",
                                         globals=globals(),
