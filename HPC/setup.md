@@ -3,5 +3,5 @@
 ### System:
 <ul>
 <li>Ubuntu / WSL </li>
-<li>OpenMP: [Installation](https://www.geeksforgeeks.org/openmp-introduction-with-installation-guide/)</li>
+<li>OpenMP: <a href='https://www.geeksforgeeks.org/openmp-introduction-with-installation-guide/'>Installation</a> </li>
 </ul>
