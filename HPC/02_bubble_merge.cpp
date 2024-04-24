@@ -21,39 +21,33 @@ void bubbleSort(vector<int>& arr) {
 }
 
 void merge(vector<int>& arr, int l, int m, int r) {
-    int n1 = m - l + 1;
-    int n2 = r - m;
+    vector<int> temp;
+    int left = l;
+    int right = m + 1;
 
-    vector<int> L(n1), R(n2);
-
-    for (int i = 0; i < n1; i++)
-        L[i] = arr[l + i];
-    for (int j = 0; j < n2; j++)
-        R[j] = arr[m + 1 + j];
-
-    int i = 0, j = 0, k = l;
-
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
-            i++;
-        } else {
-            arr[k] = R[j];
-            j++;
+    while (left <= m && right <= r) {
+        if (arr[left] <= arr[right]) {
+            temp.push_back(arr[left]);
+            left++;
         }
-        k++;
+        else {
+            temp.push_back(arr[right]);
+            right++;
+        }
     }
 
-    while (i < n1) {
-        arr[k] = L[i];
-        i++;
-        k++;
+    while (left <= m) {
+        temp.push_back(arr[left]);
+        left++;
     }
 
-    while (j < n2) {
-        arr[k] = R[j];
-        j++;
-        k++;
+    while (right <= r) {
+        temp.push_back(arr[right]);
+        right++;
+    }
+
+    for (int i = l; i <= r; i++) {
+        arr[i] = temp[i - l];
     }
 }
 
