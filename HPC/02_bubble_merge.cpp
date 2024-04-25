@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <omp.h>
+#include<ctime>
 
 using namespace std;
 
@@ -21,33 +22,39 @@ void bubbleSort(vector<int>& arr) {
 }
 
 void merge(vector<int>& arr, int l, int m, int r) {
-    vector<int> temp;
-    int left = l;
-    int right = m + 1;
+    int n1 = m - l + 1;
+    int n2 = r - m;
 
-    while (left <= m && right <= r) {
-        if (arr[left] <= arr[right]) {
-            temp.push_back(arr[left]);
-            left++;
+    vector<int> L(n1), R(n2);
+
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    int i = 0, j = 0, k = l;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
         }
-        else {
-            temp.push_back(arr[right]);
-            right++;
-        }
+        k++;
     }
 
-    while (left <= m) {
-        temp.push_back(arr[left]);
-        left++;
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
     }
 
-    while (right <= r) {
-        temp.push_back(arr[right]);
-        right++;
-    }
-
-    for (int i = l; i <= r; i++) {
-        arr[i] = temp[i - l];
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 }
 
@@ -75,17 +82,27 @@ int main() {
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
+    clock_t bubbleStart = clock();
     bubbleSort(arr);
+    clock_t bubbleEnd = clock();
     cout << "Sorted array using Bubble Sort: ";
     for (int num : arr)
         cout << num << " ";
     cout << endl;
 
+    clock_t mergeStart = clock();
     mergeSort(arr, 0, n - 1);
+    clock_t mergeEnd = clock();
     cout << "Sorted array using Merge Sort: ";
     for (int num : arr)
         cout << num << " ";
     cout << endl;
+
+    double bubbleDuration = double(bubbleEnd-bubbleStart) / CLOCKS_PER_SEC;
+    double mergeDuration = double(mergeEnd-mergeStart) / CLOCKS_PER_SEC;
+
+    cout << "Bubble sort time in seconds: " << bubbleDuration << endl;
+    cout << "Merge sort time in seconds: " << mergeDuration << endl;
 
     return 0;
 }
