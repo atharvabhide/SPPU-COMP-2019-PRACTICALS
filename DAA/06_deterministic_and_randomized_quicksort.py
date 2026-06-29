@@ -1,17 +1,8 @@
 import random
 import timeit
-
-def deterministic_partition(arr, low, high):
-    pivot = arr[high]
-    i = low - 1
-
-    for j in range(low, high):
-        if arr[j] < pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i]
-
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from shared.sorting_utils import partition as deterministic_partition
 
 def randomized_partition(arr, low, high):
     pivot_index = random.randint(low, high)

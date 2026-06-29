@@ -1,4 +1,7 @@
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 import streamlit as st
+from shared.streamlit_utils import create_ask_quit_buttons, handle_unknown_query
 
 bot_name = "College Buddy"
 
@@ -72,21 +75,12 @@ def respond(input: str):
             st.write(value)
     else:
         print(input)
-        key = input
-        st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below-")
-        answer = st.text_input("Answer")
-        add = st.button("Add answer")
-        if (add):
-            knowledge_base[key] = [answer]
+        handle_unknown_query(knowledge_base, input)
 
 if __name__ == "__main__":
     input = st.text_input("Enter a query here-")
     input = input.lower()
-    col1, col2 = st.columns([1,0.1])
-    with col1:
-        ask = st.button("Ask")
-    with col2:
-        quit = st.button("Quit")
+    ask, quit = create_ask_quit_buttons()
     if (ask):
         respond(input)
     if (quit):

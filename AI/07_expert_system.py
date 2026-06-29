@@ -1,5 +1,8 @@
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 import streamlit as st
 from typing import List
+from shared.streamlit_utils import create_ask_quit_buttons, handle_unknown_query
 
 knowledge_base = {
     "cold" : [
@@ -51,70 +54,43 @@ knowledge_base = {
 
 st.header("Medical Diagnosis Expert System")
 
+def _diagnose_and_respond(disease_name, symptoms):
+    """Display diagnosis and treatment from the knowledge base."""
+    st.write(f"You have {disease_name}!")
+    st.write("Please take the following medicines and precautions-")
+    for i in knowledge_base[disease_name]:
+        st.write(i)
+
+def _handle_unknown_symptoms(symptoms):
+    """Fallback when symptoms don't match any known disease."""
+    handle_unknown_query(knowledge_base, str(symptoms))
+
 def respond(input: List[str]):
     symptoms = input
     if (len(symptoms) == 3):
         if (symptoms[0] == "rash" and symptoms[1] == "body ache" and symptoms[2] == "fever"):
-            st.write("You have chicken pox!")
-            st.write("Please take the following medicines and precautions-")
-            for i in knowledge_base["chicken pox"]:
-                st.write(i)
+            _diagnose_and_respond("chicken pox", symptoms)
         else:
-            st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below-")
-            answer = st.text_input("Answer")
-            add = st.button("Add answer")
-            if (add):
-                for key in symptoms:
-                    knowledge_base[key] = [answer]
+            _handle_unknown_symptoms(symptoms)
     elif (len(symptoms) == 4):
         if (symptoms[0] == "headache" and symptoms[1] == "runny nose" and symptoms[2] == "sneezing" and symptoms[3] == "sore throat"):
-            st.write("You have cold!")
-            st.write("Please take the following medicines and precautions-")
-            for i in knowledge_base["cold"]:
-                st.write(i)
+            _diagnose_and_respond("cold", symptoms)
         elif (symptoms[0] == "headache" and symptoms[1] == "abdominal pain" and symptoms[2] == "poor appetite" and symptoms[3] == "fever"):
-            st.write("You have typhoid!")
-            st.write("Please take the following medicines and precautions-")
-            for i in knowledge_base["typhoid"]:
-                st.write(i)
+            _diagnose_and_respond("typhoid", symptoms)
         elif (symptoms[0] == "fever" and symptoms[1] == "runny nose" and symptoms[2] == "rash" and symptoms[3] == "conjunctivitis"):
-            st.write("You have measles!")
-            st.write("Please take the following medicines and precautions-")
-            for i in knowledge_base["measles"]:
-                st.write(i)
+            _diagnose_and_respond("measles", symptoms)
         else:
-            st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below-")
-            answer = st.text_input("Answer")
-            add = st.button("Add answer")
-            if (add):
-                for key in symptoms:
-                    knowledge_base[key] = [answer]
+            _handle_unknown_symptoms(symptoms)
     elif (len(symptoms) == 5):
         if (symptoms[0] == "sore throat" and symptoms[1] == "fever" and symptoms[2] == "headache" and symptoms[3] == "chills" and symptoms[4] == "body ache"):
-            st.write("You have influenza!")
-            st.write("Please take the following medicines and precautions-")
-            for i in knowledge_base["influenza"]:
-                st.write(i)
+            _diagnose_and_respond("influenza", symptoms)
         else:
-            st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below-")
-            answer = st.text_input("Answer")
-            add = st.button("Add answer")
-            if (add):
-                for key in symptoms:
-                    knowledge_base[key] = [answer]
+            _handle_unknown_symptoms(symptoms)
     elif (len(symptoms) == 6):
         if (symptoms[0] == "fever" and symptoms[1] == "sweating" and symptoms[2] == "headache" and symptoms[3] == "nausea" and symptoms[4] == "vomiting" and symptoms[5] == "diahrrea"):
-            st.write("You have malaria!")
-            st.write("Please take the following medicines and precautions-")
-            for i in knowledge_base["malaria"]:
-                st.write(i)
+            _diagnose_and_respond("malaria", symptoms)
         else:
-            st.write("Question is not present in the knowledge base!\nCould you please enter the appropriate answer for the question below-")
-            answer = st.text_input("Answer")
-            add = st.button("Add answer")
-            if (add):
-                for key in symptoms:
-                    knowledge_base[key] = [answer]
+            _handle_unknown_symptoms(symptoms)
 
 if __name__ == "__main__":
     options = st.multiselect(
@@ -122,11 +98,7 @@ if __name__ == "__main__":
     ["headache", "runny nose", "sneezing", "sore throat", "fever", "chills", "body ache", "abdominal pain", "poor appetite", "rash", "conjunctivitis", "sweating", "nausea", "vomiting", "diahrrea"],
     [])
 
-    col1, col2 = st.columns([1,0.1])
-    with col1:
-        ask = st.button("Ask")
-    with col2:
-        quit = st.button("Quit")
+    ask, quit = create_ask_quit_buttons()
     if (ask):
         respond(options)
     if (quit):

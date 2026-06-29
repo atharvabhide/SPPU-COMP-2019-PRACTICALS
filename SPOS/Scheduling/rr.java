@@ -13,13 +13,7 @@ public class rr
         System.out.println("Enter the quantum here-");
         int quantum = scan.nextInt();
 
-        int[] bt = new int[processes];
-
-        System.out.println("Enter the burst times here-");
-        for (int i = 0; i < processes; i++)
-        {
-            bt[i] = scan.nextInt();
-        }
+        int[] bt = SchedulingUtils.readBurstTimes(scan, processes);
 
         int[] rem_bt = new int[processes];
         for (int i = 0; i < processes; i++)
@@ -62,23 +56,10 @@ public class rr
             }
         }
 
-        int[] tt = new int[processes];
-        for (int i = 0; i < processes; i++)
-        {
-            tt[i] = wt[i] + bt[i];
-        }
-
-        float total_wt = 0;
-        float total_tt = 0;
-        for (int i = 0; i < processes; i++)
-        {
-            total_wt += wt[i];
-            total_tt += tt[i];
-        }
+        int[] tt = SchedulingUtils.calculateTurnaroundTimes(wt, bt);
 
         System.out.println("Final outputs are-");
-        System.out.println(total_wt/processes);
-        System.out.println(total_tt/processes);
+        SchedulingUtils.printAverages(wt, tt, processes);
 
         scan.close();
     }

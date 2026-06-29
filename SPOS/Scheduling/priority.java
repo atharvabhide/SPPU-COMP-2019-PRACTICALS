@@ -10,15 +10,9 @@ public class priority
         System.out.println("Enter the number of processes-");
         int processes = scan.nextInt();
 
-        int[] bt = new int[processes];
+        int[] bt = SchedulingUtils.readBurstTimes(scan, processes);
+
         int[] priorities = new int[processes];
-
-        System.out.println("Enter the burst times-");
-        for (int i = 0; i < processes; i++)
-        {
-            bt[i] = scan.nextInt();
-        }
-
         System.out.println("Enter the priorites-");
         for (int i = 0; i < processes; i++)
         {
@@ -43,7 +37,6 @@ public class priority
 
         // apply fcfs
         int wt[] = new int[processes];
-        int tt[] = new int[processes];
         wt[0] = 0;
         
         for (int i = 1; i < processes; i++)
@@ -51,21 +44,9 @@ public class priority
             wt[i] = wt[i-1] + bt[i-1];
         }
 
-        for (int i = 0; i < processes; i++)
-        {
-            tt[i] = wt[i] + bt[i];
-        }
-
-        float total_wt = 0;
-        float total_tt = 0;
-        for (int i = 0; i < processes; i++)
-        {
-            total_wt += wt[i];
-            total_tt += tt[i];
-        }
+        int[] tt = SchedulingUtils.calculateTurnaroundTimes(wt, bt);
 
         System.out.println("Final outputs are-");
-        System.out.println(total_wt/processes);
-        System.out.println(total_tt/processes);
+        SchedulingUtils.printAverages(wt, tt, processes);
     }
 }
