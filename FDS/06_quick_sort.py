@@ -14,12 +14,28 @@ def quickSort(array, low, high):
     quickSort(array, low, pi - 1)
     quickSort(array, pi + 1, high)
 
-n = int(input("Enter the number of students here-\n"))
+try:
+    n = int(input("Enter the number of students here-\n"))
+except ValueError:
+    print("Error: Please enter a valid integer.")
+    exit(1)
+if n <= 0:
+    print("Error: Number of students must be positive.")
+    exit(1)
 percentage = []
 for i in range(n):
-    element = float(input("Enter the percentage of the student here-\n"))
+    try:
+        element = float(input("Enter the percentage of the student here-\n"))
+    except ValueError:
+        print("Error: Please enter a valid number.")
+        exit(1)
     if (0.0 <= element <= 100.0):
         percentage.append(element)
+    else:
+        print(f"Warning: {element} is out of range [0, 100]. Skipping this entry.")
+if not percentage:
+    print("Error: No valid percentages were entered.")
+    exit(1)
 quickSort(percentage,0,len(percentage)-1)
 print("The sorted array is", percentage)
 print("The top 5 students are-")

@@ -16,7 +16,12 @@ def word_count(myfile):
             logging.debug("this file has %d words", num_words)
             return num_words
     except OSError as e:
-        logging.error("error reading the file")
+        logging.error("error reading the file: %s", e)
+        raise
 
 if __name__ == "__main__":
-    word_count("words.txt")
+    try:
+        result = word_count("words.txt")
+        print(f"Word count: {result}")
+    except OSError as e:
+        print(f"Failed to count words: {e}")

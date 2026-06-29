@@ -1,4 +1,10 @@
-from captcha.image import ImageCaptcha
+import sys
+
+try:
+    from captcha.image import ImageCaptcha
+except ImportError:
+    print("Error: 'captcha' library is not installed. Run: pip install captcha")
+    sys.exit(1)
 
 # Create an image instance of the given size
 image = ImageCaptcha(width = 280, height = 90)
@@ -7,10 +13,13 @@ image = ImageCaptcha(width = 280, height = 90)
 captcha_text = 'CSDF LAB 2'
 
 # generate the image of the given text
-data = image.generate(captcha_text)
-
-# write the image on the given file and save it
-image.write(captcha_text, 'CAPTCHA.png')
+try:
+    data = image.generate(captcha_text)
+    # write the image on the given file and save it
+    image.write(captcha_text, 'CAPTCHA.png')
+except IOError as e:
+    print(f"Error: Failed to generate or save captcha image: {e}")
+    sys.exit(1)
 
 #read from image text
 X = input("Enter text from image captcha below-\n")

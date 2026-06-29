@@ -23,7 +23,11 @@ def fibonacci_recur(n):
     return fib1 + fib2, steps1 + steps2 + 1
 
 if __name__ == '__main__':
-    n = int(input("Enter a number: "))
+    try:
+        n = int(input("Enter a number: "))
+    except ValueError:
+        print("Error: Please enter a valid integer.")
+        exit(1)
     print("Iterative:", fibonacci_iter(n)[0])
     print("Steps:", fibonacci_iter(n)[1])
     print("Recursive:", fibonacci_recur(n)[0])
