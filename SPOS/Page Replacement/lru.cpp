@@ -1,25 +1,11 @@
 #include<bits/stdc++.h>
+#include "page_replacement_utils.h"
 using namespace std;
 
 int main()
 {
-
-    int n;
-    cout << "Enter the number of pages here-\n";
-    cin >> n;
-
-    vector<int> pages;
-    cout << "Enter the page numbers here-\n";
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        pages.push_back(x);
-    }
-
-    int capacity;
-    cout << "Enter the capacity here-\n";
-    cin >> capacity;
+    auto [pages, capacity] = readPages();
+    int n = pages.size();
     vector<int> memory;
 
     int ph = 0;
@@ -36,7 +22,7 @@ int main()
         else 
         {
             pf++; 
-            if (memory.size() < capacity)
+            if ((int)memory.size() < capacity)
             {
                 memory.push_back(pages[i]);
             }
@@ -48,8 +34,7 @@ int main()
         }
     }
 
-    cout << "Number of page hits are- " << ph << endl;
-    cout << "Number of page faults are- " << pf << endl;
+    printPageStats(ph, pf, n);
 
     return 0;
 }

@@ -1,23 +1,11 @@
 #include<bits/stdc++.h>
+#include "page_replacement_utils.h"
 using namespace std;
 
 int main()
 {
-
-    int n;
-    cout << "Enter the number of pages here-\n";
-    cin >> n;
-
-    int pages[n];
-    cout << "Enter the page numbers here-\n";
-    for (int i = 0; i < n; i++)
-    {
-        cin >> pages[i];
-    }
-
-    int capacity;
-    cout << "Enter the capacity of the memory-\n";
-    cin >> capacity;
+    auto [pages, capacity] = readPages();
+    int n = pages.size();
 
     queue<int> q;
     unordered_set<int> memory;
@@ -28,7 +16,7 @@ int main()
     for (int i = 0; i < n; i++)
     {
         // check if memory holds fewer pages than capacity
-        if (memory.size() < capacity)
+        if ((int)memory.size() < capacity)
         {
             // push page in the memory if it is not in the memory
             if (memory.find(pages[i]) == memory.end())
@@ -62,10 +50,6 @@ int main()
         }
     }
 
-    cout << "Hit ratio is-" << endl;
-    cout << float(ph)/float(n) << endl;
-
-    cout << "Fault ratio is-" << endl;
-    cout << float(pf)/float(n) << endl; 
+    printPageStats(ph, pf, n);
     return 0;
 }

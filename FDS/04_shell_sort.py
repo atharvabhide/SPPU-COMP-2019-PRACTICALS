@@ -1,3 +1,7 @@
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from shared.sorting_utils import get_student_percentages, display_top_students
+
 def shell_sort(percentage,size):
     interval = size // 2
     while interval > 0:
@@ -19,18 +23,11 @@ def insertion_sort(percentage):
             j = j - 1
         percentage[j+1] = key
 
-n = int(input("Enter the number of students here-\n"))
-percentage = []
-for i in range(n):
-    element = float(input("Enter the percentage of the student here-\n"))
-    if (0.0 <= element <= 100.0):
-        percentage.append(element)
+percentage = get_student_percentages()
 choice = int(input("Enter 0 for shell sort and 1 for insertion sort-"))
 if (choice == 0):
     shell_sort(percentage,len(percentage))
 else:
     insertion_sort(percentage)
 print("The sorted array is", percentage)
-print("The top 5 students are-")
-for i in percentage[-1:-6:-1]:
-    print(i, end=' ')
+display_top_students(percentage)

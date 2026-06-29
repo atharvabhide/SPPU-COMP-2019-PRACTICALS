@@ -1,10 +1,14 @@
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from shared.n_queens_utils import create_board, print_board
+
 def solveNQueens(n: int, first_queen_col: int):
     col = set()
     posDiag = set()
     negDiag = set()
 
     res = []
-    board = [["."] * n for _ in range(n)]
+    board = create_board(n)
 
     def backtrack(r):
         if r == n:
@@ -39,5 +43,4 @@ if __name__ == "__main__":
     n = 8
     first_queen_col = 1
     board = solveNQueens(n, first_queen_col)[0]
-    for row in board:
-        print(" ".join(row))
+    print_board(board)
