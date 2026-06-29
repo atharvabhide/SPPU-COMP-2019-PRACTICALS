@@ -9,14 +9,17 @@ contract Bank {
         balances[msg.sender] = 0;
     }
 
-    // payable is necessary because the function accepts a value (amount) as a parameter (EXTERNAL SOURCE AHE MHANUN)
-    function deposit(uint256 amount) public payable {
-        balances[msg.sender] += amount;
+    // payable is necessary because the function accepts Ether
+    function deposit() public payable {
+        require(msg.value > 0, "Deposit amount must be greater than zero");
+        balances[msg.sender] += msg.value;
     }
 
     function withdraw(uint256 amount) public {
         require(balances[msg.sender] >= amount, "Insufficient balance");
         balances[msg.sender] -= amount;
+        (bool sent, ) = payable(msg.sender).call{value: amount}("");
+        require(sent, "Failed to send Ether");
     }
 
     function transfer(address recipient, uint256 amount) public {

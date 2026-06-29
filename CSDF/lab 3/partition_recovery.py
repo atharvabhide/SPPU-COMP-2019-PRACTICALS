@@ -1,16 +1,26 @@
 import os
-print("Partion Recovery Script")
+import re
+import subprocess
+
+def validate_input(value):
+    """Reject shell metacharacters to prevent command injection."""
+    if not re.match(r'^[a-zA-Z0-9_./-]+$', value):
+        raise ValueError(f"Invalid input (contains disallowed characters): {value}")
+    return value
+
+print("Partition Recovery Script")
 print("List of devices attached to system is")
 os.system("lsblk")
-devname = input("Enter the device name\n")
+devname = validate_input(input("Enter the device name\n"))
 
-#show the list of partition
-commandline = 'echo -e "p\nq\n" | sudo fdisk /dev/'+devname
 print("Showing partition table")
-os.system(commandline)
+subprocess.run(["sudo", "fdisk", "-l", "/dev/" + devname], check=True)
 
-pno = input("Enter the partition no to recover ")
+pno = validate_input(input("Enter the partition no to recover "))
 
-#delete the partition
-commandline='echo -e "n\n\n' + pno +'\n\n\nw\n" | sudo fdisk /dev/'+devname
-os.system(commandline)
+fdisk_commands = f"n\n\n{pno}\n\n\nw\n"
+subprocess.run(
+    ["sudo", "fdisk", "/dev/" + devname],
+    input=fdisk_commands.encode(),
+    check=True
+)

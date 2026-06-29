@@ -1,6 +1,6 @@
  import java.io.*;  
  import java.sql.*;  
-  
+
  import java.util.*;  
  public class DMA1  
  {  
@@ -14,12 +14,15 @@
           int ch;  
           boolean flag=true;  
           Scanner sc=new Scanner(System.in);  
-  try   
+ try   
     {  
 
    Class.forName("com.mysql.jdbc.Driver");  
      
-   con=DriverManager.getConnection("jdbc:mysql://localhost:3306/teacher","root","mmcoe");  
+   String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/teacher";
+   String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "root";
+   String dbPassword = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "";
+   con=DriverManager.getConnection(dbUrl, dbUser, dbPassword);
      
          
         
@@ -39,7 +42,7 @@
    
  switch(ch)  
  { 
- 
+
  case 1:
 	 System.out.println("Enter the name of table to be created");
      String tname=sc.nextLine();   
@@ -74,9 +77,11 @@
    col5=sc.nextLine();  
    System.out.println(" enter Third column value ");  
   col6=sc.nextLine(); 
-   String query="Insert into "+ insert_table + " values('"+col4+"','"+col5+"','"+col6+"')";  
-   s=con.createStatement();  
-   s.executeUpdate(query); 
+   PreparedStatement insertStmt=con.prepareStatement("INSERT INTO " + insert_table + " VALUES(?,?,?)");
+   insertStmt.setString(1, col4);
+   insertStmt.setString(2, col5);
+   insertStmt.setString(3, col6);
+   insertStmt.executeUpdate();
    System.out.println("row inserted");
    break;  
     
@@ -85,21 +90,23 @@
    
     System.out.println("Enter the id");  
     String str2=sc.nextLine();    
-    s=con.createStatement();  
-    int x=s.executeUpdate("delete from stud where id='"+str2+"'");  
+    PreparedStatement deleteStmt=con.prepareStatement("DELETE FROM stud WHERE id=?");
+    deleteStmt.setString(1, str2);
+    int x=deleteStmt.executeUpdate();
     System.out.println("deleted rows are:"+x);  
     break;  
    
  case 4:  
    
-  
+
     System.out.println("enter id to be updated");  
     String id1=sc.nextLine();
     System.out.println("enter marks to be updated");
     String mks=sc.nextLine();
-    String query1="update stud set marks='"+mks+ "'where id='"+id1+"'";  
-    s=con.createStatement();  
-    int y=s.executeUpdate(query1);  
+    PreparedStatement updateStmt=con.prepareStatement("UPDATE stud SET marks=? WHERE id=?");
+    updateStmt.setString(1, mks);
+    updateStmt.setString(2, id1);
+    int y=updateStmt.executeUpdate();
     System.out.println("updated rows are:"+y);  
     break;  
    
@@ -127,7 +134,7 @@
    
    }while(rs.next());  
      
- 
+
   break;  
   
  case 6:
@@ -192,14 +199,13 @@
  flag=false;  
    
  }while(flag); 
- 
+
     }  
   catch(Exception e)  
 {  
 System.out.println(e);  
 
 } 
- 
-  }  
- }  
 
+  }  
+}  
