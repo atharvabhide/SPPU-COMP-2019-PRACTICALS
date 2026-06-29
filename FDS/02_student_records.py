@@ -1,7 +1,18 @@
-n = int(input("Enter the number of students-\n"))
+try:
+    n = int(input("Enter the number of students-\n"))
+except ValueError:
+    print("Error: Please enter a valid integer for number of students.")
+    exit(1)
+if n <= 0:
+    print("Error: Number of students must be positive.")
+    exit(1)
 marks = []
 for i in range(n):
-    element = int(input("Enter the marks-\n"))
+    try:
+        element = int(input("Enter the marks-\n"))
+    except ValueError:
+        print("Error: Please enter a valid integer for marks.")
+        exit(1)
     marks.append(element)
     
 def average(marks):
@@ -13,6 +24,8 @@ def average(marks):
     for j in marks:
         if j != -1:
             len += 1
+    if len == 0:
+        raise ValueError("Cannot compute average: no valid marks found (all students absent).")
     return sum/len
 
 def maximum(marks):

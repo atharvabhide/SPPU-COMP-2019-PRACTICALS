@@ -4,7 +4,7 @@
  import java.util.*;  
  public class DMA1  
  {  
-  public static void main(String[] args) throws Exception   
+  public static void main(String[] args)   
    {   
 	  int rno,age;  
       	  String col1,col2,col3,col4,col5,col6;    
@@ -194,11 +194,31 @@
  }while(flag); 
  
     }  
+  catch(ClassNotFoundException e)  
+{  
+  System.err.println("Error: MySQL JDBC Driver not found. " + e.getMessage());  
+}  
+  catch(SQLException e)  
+{  
+  System.err.println("Database error: " + e.getMessage());  
+  e.printStackTrace();  
+}  
+  catch(NumberFormatException e)  
+{  
+  System.err.println("Invalid input: expected a number. " + e.getMessage());  
+}  
   catch(Exception e)  
 {  
-System.out.println(e);  
-
-} 
+  System.err.println("Unexpected error: " + e.getMessage());  
+  e.printStackTrace();  
+}  
+  finally  
+{  
+  try { if(rs != null) rs.close(); } catch(SQLException e) { System.err.println("Error closing ResultSet: " + e.getMessage()); }  
+  try { if(s != null) s.close(); } catch(SQLException e) { System.err.println("Error closing Statement: " + e.getMessage()); }  
+  try { if(con != null) con.close(); } catch(SQLException e) { System.err.println("Error closing Connection: " + e.getMessage()); }  
+  if(sc != null) sc.close();  
+}  
  
   }  
  }  

@@ -2,16 +2,27 @@ import java.util.*;
 
 public class rr 
 {   
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         // algo -> gfg
         Scanner scan = new Scanner(System.in);    
-
+        try
+        {
         System.out.println("Enter the number of processes-");
         int processes = scan.nextInt();
+        if (processes <= 0)
+        {
+            System.err.println("Error: Number of processes must be positive.");
+            return;
+        }
 
         System.out.println("Enter the quantum here-");
         int quantum = scan.nextInt();
+        if (quantum <= 0)
+        {
+            System.err.println("Error: Time quantum must be positive.");
+            return;
+        }
 
         int[] bt = new int[processes];
 
@@ -19,6 +30,11 @@ public class rr
         for (int i = 0; i < processes; i++)
         {
             bt[i] = scan.nextInt();
+            if (bt[i] <= 0)
+            {
+                System.err.println("Error: Burst time must be positive.");
+                return;
+            }
         }
 
         int[] rem_bt = new int[processes];
@@ -79,7 +95,14 @@ public class rr
         System.out.println("Final outputs are-");
         System.out.println(total_wt/processes);
         System.out.println(total_tt/processes);
-
-        scan.close();
+        }
+        catch (InputMismatchException e)
+        {
+            System.err.println("Error: Invalid input. Please enter integers only.");
+        }
+        finally
+        {
+            scan.close();
+        }
     }
 }

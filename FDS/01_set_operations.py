@@ -1,24 +1,37 @@
+import sys
+
+def get_positive_int(prompt):
+    try:
+        value = int(input(prompt))
+    except ValueError:
+        print("Error: Please enter a valid integer.")
+        sys.exit(1)
+    if value < 0:
+        print("Error: Value cannot be negative.")
+        sys.exit(1)
+    return value
+
 cricket = []
 badminton = []
 football = []
 
-total_cricket = int(input("Enter the number of students who play cricket-\n"))
+total_cricket = get_positive_int("Enter the number of students who play cricket-\n")
 for i in range(total_cricket):
-    roll_number_cricket = int(input("Enter the roll number of the student-\n"))
+    roll_number_cricket = get_positive_int("Enter the roll number of the student-\n")
     if roll_number_cricket not in cricket:
         cricket.append(roll_number_cricket)
     else:
         pass
-total_badminton = int(input("Enter the number of students who play badminton-\n"))
+total_badminton = get_positive_int("Enter the number of students who play badminton-\n")
 for i in range(total_badminton):
-    roll_number_badminton = int(input("Enter the roll number of the student-\n"))
+    roll_number_badminton = get_positive_int("Enter the roll number of the student-\n")
     if roll_number_badminton not in badminton:
         badminton.append(roll_number_badminton)
     else:
         pass
-total_football = int(input("Enter the number of students who play football-\n"))
+total_football = get_positive_int("Enter the number of students who play football-\n")
 for i in range(total_football):
-    roll_number_football = int(input("Enter the roll number of the student-\n"))
+    roll_number_football = get_positive_int("Enter the roll number of the student-\n")
     if roll_number_football not in football:
         football.append(roll_number_football)
     else:

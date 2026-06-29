@@ -2,13 +2,19 @@ import java.util.*;
 
 public class priority
 {
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         // input processes with burst time and priority
         Scanner scan = new Scanner(System.in);
-        
+        try
+        {
         System.out.println("Enter the number of processes-");
         int processes = scan.nextInt();
+        if (processes <= 0)
+        {
+            System.err.println("Error: Number of processes must be positive.");
+            return;
+        }
 
         int[] bt = new int[processes];
         int[] priorities = new int[processes];
@@ -17,6 +23,11 @@ public class priority
         for (int i = 0; i < processes; i++)
         {
             bt[i] = scan.nextInt();
+            if (bt[i] <= 0)
+            {
+                System.err.println("Error: Burst time must be positive.");
+                return;
+            }
         }
 
         System.out.println("Enter the priorites-");
@@ -39,7 +50,6 @@ public class priority
             finalbts[x] = e.getValue();
             x++;
         }
-        scan.close();
 
         // apply fcfs
         int wt[] = new int[processes];
@@ -67,5 +77,14 @@ public class priority
         System.out.println("Final outputs are-");
         System.out.println(total_wt/processes);
         System.out.println(total_tt/processes);
+        }
+        catch (InputMismatchException e)
+        {
+            System.err.println("Error: Invalid input. Please enter integers only.");
+        }
+        finally
+        {
+            scan.close();
+        }
     }
 }
